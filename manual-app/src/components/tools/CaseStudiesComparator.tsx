@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Eye, AlertTriangle, CheckCircle2, ShieldAlert, Check, ZoomIn } from 'lucide-react';
+import { Eye, AlertTriangle, CheckCircle2, ShieldAlert, Check, ZoomIn, Activity, Sparkles } from 'lucide-react';
 import { useManual } from '../../context/ManualContext';
 
 interface CaseStudy {
@@ -114,49 +114,49 @@ export const CaseStudiesComparator: React.FC = () => {
   const filteredStudies = caseStudies.filter((c) => filterType === 'all' || c.type === filterType);
 
   return (
-    <div className="rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 shadow-2xl space-y-8 text-neutral-200">
+    <div className="rounded-3xl border border-white/10 bg-gradient-to-b from-dark-panel to-dark-surface backdrop-blur-2xl p-6 sm:p-8 shadow-panel space-y-8 text-slate-200">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
         <div>
-          <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-xl bg-neutral-800 text-white">
+          <div className="flex items-center space-x-3">
+            <div className="p-2.5 rounded-2xl bg-cyber-amber/10 border border-cyber-amber/30 text-cyber-amber shadow-glow-amber">
               <Eye className="h-5 w-5" />
             </div>
-            <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
+            <h2 className="text-xl sm:text-2xl font-display font-extrabold text-white">
               Installation Quality Inspector (Good vs Bad Practice)
-            </h3>
+            </h2>
           </div>
-          <p className="text-xs text-neutral-400 mt-1">
+          <p className="text-xs text-slate-400 mt-1.5 leading-relaxed">
             Visual inspection and failure analysis of real-world vessel installations (Chapter 7).
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center space-x-1.5 bg-black p-1 rounded-xl border border-neutral-800 self-start sm:self-auto">
+        <div className="flex items-center space-x-1.5 bg-dark-void p-1.5 rounded-2xl border border-white/10 self-start sm:self-auto font-mono">
           <button
             onClick={() => setFilterType('all')}
-            className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'all' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all ${
+              filterType === 'all' ? 'bg-gradient-to-r from-cyber-cyan to-cyber-blue text-dark-void shadow-glow-cyan' : 'text-slate-400 hover:text-white'
             }`}
           >
-            All Examples
+            ALL (7)
           </button>
           <button
             onClick={() => setFilterType('bad')}
-            className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'bad' ? 'bg-rose-500 text-white' : 'text-neutral-400 hover:text-white'
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all ${
+              filterType === 'bad' ? 'bg-cyber-rose text-white shadow-[0_0_15px_#F43F5E]' : 'text-slate-400 hover:text-white'
             }`}
           >
-            Bad Practices (4)
+            DEFECTS (4)
           </button>
           <button
             onClick={() => setFilterType('good')}
-            className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'good' ? 'bg-emerald-500 text-black font-bold' : 'text-neutral-400 hover:text-white'
+            className={`px-3.5 py-1.5 text-xs font-bold rounded-xl transition-all ${
+              filterType === 'good' ? 'bg-cyber-emerald text-dark-void shadow-[0_0_15px_#10B981]' : 'text-slate-400 hover:text-white'
             }`}
           >
-            Good Practices (3)
+            APPROVED (3)
           </button>
         </div>
       </div>
@@ -169,31 +169,31 @@ export const CaseStudiesComparator: React.FC = () => {
           return (
             <div
               key={study.id}
-              className={`rounded-2xl border p-5 transition-all flex flex-col justify-between ${
+              className={`rounded-3xl border p-6 transition-all duration-300 flex flex-col justify-between backdrop-blur-xl ${
                 isBad
-                  ? 'border-rose-500/30 bg-rose-950/15 hover:border-rose-500/50'
-                  : 'border-emerald-500/30 bg-emerald-950/15 hover:border-emerald-500/50'
+                  ? 'border-cyber-rose/30 bg-gradient-to-b from-dark-panel to-cyber-rose/5 hover:border-cyber-rose/60 hover:shadow-[0_0_30px_rgba(244,63,94,0.15)]'
+                  : 'border-cyber-emerald/30 bg-gradient-to-b from-dark-panel to-cyber-emerald/5 hover:border-cyber-emerald/60 hover:shadow-[0_0_30px_rgba(16,185,129,0.15)]'
               }`}
             >
               <div>
                 
                 {/* Header Tag */}
-                <div className="flex items-center justify-between mb-3">
-                  <span className={`inline-flex items-center space-x-1.5 px-2.5 py-1 rounded-lg text-xs font-bold ${
-                    isBad ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30' : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
+                <div className="flex items-center justify-between mb-3.5">
+                  <span className={`inline-flex items-center space-x-1.5 px-3 py-1 rounded-xl text-xs font-bold font-mono tracking-wider ${
+                    isBad ? 'bg-cyber-rose/20 text-rose-300 border border-cyber-rose/40' : 'bg-cyber-emerald/20 text-emerald-300 border border-cyber-emerald/40'
                   }`}>
-                    {isBad ? <AlertTriangle className="h-3.5 w-3.5 text-rose-400" /> : <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />}
-                    <span>{isBad ? 'FAILURE MODE / HAZARD' : 'APPROVED BEST PRACTICE'}</span>
+                    {isBad ? <AlertTriangle className="h-3.5 w-3.5 text-cyber-rose" /> : <CheckCircle2 className="h-3.5 w-3.5 text-cyber-emerald" />}
+                    <span>{isBad ? 'CRITICAL DEFECT' : 'APPROVED STANDARD'}</span>
                   </span>
 
-                  <span className="text-[10px] font-mono text-neutral-400 bg-black px-2 py-0.5 rounded border border-neutral-800">
+                  <span className="text-[10px] font-mono text-slate-400 bg-dark-void px-2.5 py-1 rounded-lg border border-white/10">
                     Sec {study.sectionRef} • p.{study.pageRef}
                   </span>
                 </div>
 
-                <h4 className="text-base font-bold text-white mb-3">
+                <h3 className="text-base font-bold text-white mb-3 font-display">
                   {study.title}
-                </h4>
+                </h3>
 
                 {/* Image preview */}
                 <div
@@ -203,34 +203,34 @@ export const CaseStudiesComparator: React.FC = () => {
                     figureNumber: study.figureNumber,
                     pageRef: study.pageRef
                   })}
-                  className="cursor-zoom-in relative rounded-xl overflow-hidden bg-black p-2 mb-4 group border border-neutral-800"
+                  className="cursor-zoom-in relative rounded-2xl overflow-hidden bg-dark-void p-3 mb-4 group border border-white/10"
                 >
                   <img
                     src={study.figureSrc}
                     alt={study.caption}
-                    className="max-h-48 w-full object-contain rounded-lg group-hover:scale-105 transition-transform"
+                    className="max-h-48 w-full object-contain rounded-xl group-hover:scale-105 transition-transform duration-300"
                   />
-                  <div className="absolute top-2 right-2 bg-neutral-900/90 p-1 rounded text-white opacity-0 group-hover:opacity-100 transition border border-neutral-700">
+                  <div className="absolute top-3 right-3 bg-dark-base/90 p-2 rounded-xl text-cyber-cyan opacity-0 group-hover:opacity-100 transition border border-cyber-cyan/30 shadow-glow-cyan">
                     <ZoomIn className="h-4 w-4" />
                   </div>
                 </div>
 
                 {/* Details */}
-                <div className="space-y-2 text-xs text-neutral-300">
+                <div className="space-y-2.5 text-xs text-slate-300">
                   <div>
-                    <span className="font-bold text-neutral-400 block">{isBad ? 'Observed Defect:' : 'Design Feature:'}</span>
-                    <p>{study.issueOrFeature}</p>
+                    <span className="font-bold text-slate-400 font-mono text-[11px] uppercase block text-slate-300">{isBad ? 'Observed Defect:' : 'Design Feature:'}</span>
+                    <p className="leading-relaxed mt-0.5">{study.issueOrFeature}</p>
                   </div>
 
                   <div>
-                    <span className="font-bold text-neutral-400 block">{isBad ? 'Operational Impact:' : 'Operational Advantage:'}</span>
-                    <p>{study.impactOrBenefit}</p>
+                    <span className="font-bold text-slate-400 font-mono text-[11px] uppercase block text-slate-300">{isBad ? 'Operational Impact:' : 'Operational Advantage:'}</span>
+                    <p className="leading-relaxed mt-0.5">{study.impactOrBenefit}</p>
                   </div>
 
                   {study.correctiveAction && (
-                    <div className="mt-2 p-2.5 rounded-lg bg-black border border-neutral-800 text-neutral-200">
-                      <span className="font-bold text-white block text-[11px]">Required Remedy:</span>
-                      <p>{study.correctiveAction}</p>
+                    <div className="mt-3 p-3.5 rounded-2xl bg-dark-void/90 border border-cyber-cyan/30 text-cyan-200">
+                      <span className="font-bold text-cyber-cyan font-mono text-[11px] uppercase block">Required Engineering Remedy:</span>
+                      <p className="mt-0.5 leading-relaxed">{study.correctiveAction}</p>
                     </div>
                   )}
                 </div>

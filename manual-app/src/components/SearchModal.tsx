@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { Search, X, BookOpen, FileText, ArrowRight, CornerDownLeft, Layers, ShieldAlert } from 'lucide-react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
+import { Search, X, BookOpen, Layers, ArrowRight, FileText, Sparkles, Hash, CornerDownLeft } from 'lucide-react';
 import { useManual } from '../context/ManualContext';
 import { buildSearchIndex, searchManual } from '../data/searchIndex';
 import { SearchResult } from '../types/manual';
@@ -7,182 +7,158 @@ import { SearchResult } from '../types/manual';
 export const SearchModal: React.FC = () => {
   const { isSearchOpen, setIsSearchOpen, navigateToSection } = useManual();
   const [query, setQuery] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const searchIndex = useMemo(() => buildSearchIndex(), []);
 
-  const results: SearchResult[] = useMemo(() => {
-    return searchManual(query, searchIndex);
-  }, [query, searchIndex]);
-
   useEffect(() => {
-    setSelectedIndex(0);
-  }, [results]);
+    if (isSearchOpen) {
+      setTimeout(() => inputRef.current?.focus(), 50);
+    } else {
+      setQuery('');
+    }
+  }, [isSearchOpen]);
+
+  // Global Ctrl+K keyboard shortcut
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        setIsSearchOpen(!isSearchOpen);
+      } else if (e.key === 'Escape' && isSearchOpen) {
+        setIsSearchOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isSearchOpen, setIsSearchOpen]);
 
   if (!isSearchOpen) return null;
 
-  const handleSelectResult = (r: SearchResult) => {
-    navigateToSection(r.chapterId, r.sectionId);
-    setIsSearchOpen(false);
-  };
+  const rawResults: SearchResult[] = searchManual(query, searchIndex);
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev < results.length - 1 ? prev + 1 : prev));
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIndex((prev) => (prev > 0 ? prev - 1 : 0));
-    } else if (e.key === 'Enter' && results[selectedIndex]) {
-      e.preventDefault();
-      handleSelectResult(results[selectedIndex]);
-    }
-  };
-
-  const quickSearches = [
-    "LMR-400",
-    "EZ-400-NMH-X",
-    "Heliax LDF4-50",
-    "Radar spacing",
-    "Weatherproofing",
-    "Quantum SNR",
-    "V560 Phase Centre",
-    "Scotch 23",
-    "Maximum cable length"
-  ];
+  const filteredResults = rawResults.filter((item) => {
+    if (selectedCategory === 'all') return true;
+    return item.matchType === selectedCategory;
+  });
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start justify-center p-4 sm:p-6 lg:p-8 overflow-y-auto">
       
-      {/* Backdrop click to close */}
-      <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
+      {/* Backdrop */}
+      <div 
+        onClick={() => setIsSearchOpen(false)} 
+        className="fixed inset-0 bg-dark-void/85 backdrop-blur-xl transition-opacity animate-in fade-in" 
+      />
 
-      <div className="relative w-full max-w-2xl rounded-2xl border border-neutral-800 bg-neutral-950 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] z-10">
+      {/* Modal Dialog */}
+      <div className="relative w-full max-w-3xl rounded-3xl border border-white/10 bg-gradient-to-b from-dark-panel to-dark-surface shadow-2xl overflow-hidden z-10 my-8 animate-in zoom-in-95 duration-200">
         
-        {/* Search Input Box */}
-        <div className="flex items-center px-4 py-3.5 border-b border-neutral-800 bg-black">
-          <Search className="h-5 w-5 text-neutral-400 mr-3 flex-shrink-0" />
+        {/* Search Input Bar */}
+        <div className="flex items-center px-6 py-4.5 border-b border-white/10 bg-dark-panel/90">
+          <Search className="h-5 w-5 text-cyber-cyan mr-3.5 flex-shrink-0" />
           <input
+            ref={inputRef}
             type="text"
-            autoFocus
-            placeholder="Search across all 43 pages, tables, warnings, procedures..."
+            placeholder="Search keywords, connector types, radar clearance, attenuation..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={handleKeyDown}
-            className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-medium"
+            className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none font-medium font-sans"
           />
           {query && (
-            <button
+            <button 
               onClick={() => setQuery('')}
-              className="p-1 rounded text-neutral-500 hover:text-white mr-2"
+              className="p-1 rounded-lg text-slate-400 hover:text-white mr-2"
             >
               <X className="h-4 w-4" />
             </button>
           )}
-          <button
-            onClick={() => setIsSearchOpen(false)}
-            className="rounded-lg bg-neutral-900 px-2 py-1 text-[10px] font-mono text-neutral-400 hover:bg-neutral-800"
-          >
+          <kbd className="hidden sm:inline-block rounded-lg bg-dark-void px-2 py-1 font-mono text-[10px] text-slate-400 border border-white/10">
             ESC
-          </button>
+          </kbd>
         </div>
 
-        {/* Quick Suggestion Pills if no query */}
-        {!query && (
-          <div className="p-4 border-b border-neutral-800/80 bg-neutral-900/50">
-            <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider block mb-2">
-              Popular Search Topics:
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {quickSearches.map((term) => (
-                <button
-                  key={term}
-                  onClick={() => setQuery(term)}
-                  className="rounded-lg border border-neutral-800 bg-black px-2.5 py-1 text-xs text-neutral-300 hover:border-neutral-600 hover:text-white transition"
-                >
-                  {term}
-                </button>
-              ))}
+        {/* Category Filter Pills */}
+        <div className="px-6 py-3 border-b border-white/[0.06] bg-dark-surface/60 flex items-center space-x-2 overflow-x-auto custom-scrollbar font-mono text-xs">
+          <span className="text-[10px] text-slate-500 uppercase tracking-wider mr-1">Filter:</span>
+          {['all', 'title', 'content', 'table', 'callout', 'step'].map((cat) => (
+            <button
+              key={cat}
+              onClick={() => setSelectedCategory(cat)}
+              className={`px-3 py-1 rounded-xl text-[11px] font-semibold uppercase tracking-wider transition-all ${
+                selectedCategory === cat
+                  ? 'bg-cyber-cyan text-dark-void font-bold shadow-glow-cyan'
+                  : 'bg-dark-void text-slate-400 hover:text-white border border-white/10'
+              }`}
+            >
+              {cat}
+            </button>
+          ))}
+        </div>
+
+        {/* Search Results List */}
+        <div className="max-h-[60vh] overflow-y-auto p-4 space-y-2.5 custom-scrollbar">
+          {query.length < 2 ? (
+            <div className="py-14 text-center text-slate-400 space-y-2">
+              <Search className="h-8 w-8 mx-auto text-slate-600" />
+              <p className="text-sm font-medium">Type at least 2 characters to search...</p>
+              <p className="text-xs text-slate-500">Search for "LMR-400", "Radar", "Weatherproofing", or "Heliax".</p>
             </div>
-          </div>
-        )}
-
-        {/* Results List */}
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {query && results.length === 0 && (
-            <div className="py-12 text-center text-neutral-500 text-sm">
-              No results found for <span className="text-white font-semibold">"{query}"</span>.
-              <br />
-              <span className="text-xs text-neutral-600 mt-1 block">
-                Try searching for cable part numbers, satellite constellations, or procedures.
-              </span>
+          ) : filteredResults.length === 0 ? (
+            <div className="py-16 text-center text-slate-400 space-y-2">
+              <Search className="h-8 w-8 mx-auto text-slate-600" />
+              <p className="text-sm">No results found for "{query}".</p>
+              <p className="text-xs text-slate-500">Try searching for "antenna", "crimp", "loss", or "separation".</p>
             </div>
-          )}
-
-          {results.map((res, idx) => {
-            const isSelected = idx === selectedIndex;
-
-            return (
-              <div
+          ) : (
+            filteredResults.map((item, idx) => (
+              <button
                 key={idx}
-                onClick={() => handleSelectResult(res)}
-                onMouseEnter={() => setSelectedIndex(idx)}
-                className={`p-3 rounded-xl cursor-pointer transition-all ${
-                  isSelected
-                    ? 'bg-neutral-900 border border-neutral-700 shadow-sm'
-                    : 'border border-transparent hover:bg-neutral-900/60'
-                }`}
+                onClick={() => {
+                  navigateToSection(item.chapterId, item.sectionId);
+                  setIsSearchOpen(false);
+                }}
+                className="w-full text-left p-4 rounded-2xl border border-white/[0.06] bg-dark-void/70 hover:border-cyber-cyan/40 hover:bg-dark-elevated transition-all flex flex-col justify-between group shadow-sm"
               >
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center space-x-2 truncate">
-                    <span className="font-mono text-xs font-bold text-white">
-                      {res.sectionNumber}
+                <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex items-center space-x-2">
+                    <span className="font-mono text-xs font-bold text-cyber-cyan bg-cyber-cyan/10 px-2 py-0.5 rounded border border-cyber-cyan/20">
+                      {item.sectionNumber}
                     </span>
-                    <span className="text-xs font-semibold text-white truncate">
-                      {res.sectionTitle}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center space-x-1.5 flex-shrink-0 ml-2">
-                    <span className="text-[10px] font-mono text-neutral-400 bg-black px-1.5 py-0.5 rounded border border-neutral-800">
-                      Page {res.pageNumber}
-                    </span>
-                    <span className="text-[9px] uppercase font-bold text-neutral-300 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800">
-                      {res.matchType}
+                    <span className="text-xs font-bold text-white font-display group-hover:text-cyber-cyan transition-colors">
+                      {item.sectionTitle}
                     </span>
                   </div>
+                  <span className="text-[10px] font-mono text-slate-400 bg-dark-panel px-2 py-0.5 rounded border border-white/10">
+                    p.{item.pageNumber}
+                  </span>
                 </div>
 
-                <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed">
-                  {res.snippet}
+                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                  {item.snippet}
                 </p>
 
-                {isSelected && (
-                  <div className="mt-2 flex items-center justify-between text-[11px] text-neutral-300 font-medium pt-1 border-t border-neutral-800">
-                    <span className="text-neutral-400">Chapter {res.chapterNumber}: {res.chapterTitle}</span>
-                    <span className="flex items-center space-x-1 text-white">
-                      <span>Jump to section</span>
-                      <CornerDownLeft className="h-3 w-3" />
-                    </span>
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                <div className="mt-2.5 flex items-center justify-between text-[11px] text-slate-400 font-mono">
+                  <span className="text-slate-500 uppercase">{item.chapterTitle}</span>
+                  <span className="text-cyber-cyan flex items-center space-x-1 opacity-0 group-hover:opacity-100 transition-opacity font-bold">
+                    <span>Open Section</span>
+                    <CornerDownLeft className="h-3 w-3" />
+                  </span>
+                </div>
+              </button>
+            ))
+          )}
         </div>
 
         {/* Modal Footer */}
-        <div className="p-3 border-t border-neutral-800 bg-black flex items-center justify-between text-[11px] text-neutral-400">
-          <div className="flex items-center space-x-3">
-            <span><kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">↑</kbd> <kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">↓</kbd> Navigate</span>
-            <span><kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">Enter</kbd> Open</span>
-          </div>
-          <span className="font-mono text-neutral-300">
-            {results.length} matches found
-          </span>
+        <div className="p-3.5 border-t border-white/10 bg-dark-panel/90 text-xs text-slate-400 flex items-center justify-between font-mono">
+          <span className="text-[11px]">Found {filteredResults.length} matching entries</span>
+          <span className="text-cyber-cyan">AB-V-MA-00601_RevA5</span>
         </div>
 
       </div>
+
     </div>
   );
 };

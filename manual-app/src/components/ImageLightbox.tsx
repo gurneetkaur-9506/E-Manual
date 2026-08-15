@@ -1,114 +1,80 @@
-import React, { useState } from 'react';
-import { ZoomIn, ZoomOut, RotateCcw, Download, X, Maximize2 } from 'lucide-react';
+import React, { useEffect } from 'react';
+import { X, ZoomIn, Download, Maximize2, FileText, Sparkles } from 'lucide-react';
 import { useManual } from '../context/ManualContext';
 
 export const ImageLightbox: React.FC = () => {
   const { lightboxFigure, setLightboxFigure } = useManual();
-  const [scale, setScale] = useState(1);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setLightboxFigure(null);
+      }
+    };
+    if (lightboxFigure) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxFigure, setLightboxFigure]);
 
   if (!lightboxFigure) return null;
 
-  const handleZoomIn = () => setScale((prev) => Math.min(prev + 0.3, 3.5));
-  const handleZoomOut = () => setScale((prev) => Math.max(prev - 0.3, 0.6));
-  const handleReset = () => setScale(1);
-
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 lg:p-10 animate-in fade-in duration-200">
       
-      {/* Background click to close */}
-      <div className="absolute inset-0" onClick={() => setLightboxFigure(null)} />
+      {/* Dark blur backdrop */}
+      <div 
+        onClick={() => setLightboxFigure(null)} 
+        className="fixed inset-0 bg-dark-void/90 backdrop-blur-2xl transition-opacity" 
+      />
 
-      <div className="relative w-full max-w-5xl rounded-2xl border border-neutral-800 bg-neutral-950 shadow-2xl overflow-hidden flex flex-col max-h-[90vh] z-10">
+      {/* Lightbox Container */}
+      <div className="relative max-w-5xl w-full rounded-3xl border border-white/10 bg-dark-panel p-6 shadow-2xl z-10 space-y-4 animate-in zoom-in-95 duration-200">
         
-        {/* Lightbox Toolbar Header */}
-        <div className="p-3.5 border-b border-neutral-800 bg-black flex items-center justify-between">
-          <div className="flex items-center space-x-2 truncate">
-            <span className="font-mono text-xs font-bold text-white">
-              {lightboxFigure.figureNumber || 'FIGURE'}
-            </span>
-            <span className="text-xs font-semibold text-neutral-300 truncate max-w-md">
-              {lightboxFigure.caption}
-            </span>
-          </div>
-
-          <div className="flex items-center space-x-2">
-            <button
-              onClick={handleZoomOut}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900"
-              title="Zoom Out"
-            >
-              <ZoomOut className="h-4 w-4" />
-            </button>
-            <span className="text-xs font-mono text-neutral-200 w-12 text-center">
-              {Math.round(scale * 100)}%
-            </span>
-            <button
-              onClick={handleZoomIn}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900"
-              title="Zoom In"
-            >
-              <ZoomIn className="h-4 w-4" />
-            </button>
-            <button
-              onClick={handleReset}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-white hover:bg-neutral-900"
-              title="Reset Zoom"
-            >
-              <RotateCcw className="h-4 w-4" />
-            </button>
-
-            <a
-              href={lightboxFigure.src}
-              download={lightboxFigure.caption.replace(/[^a-zA-Z0-9]/g, '_') + '.png'}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-emerald-400 hover:bg-neutral-900"
-              title="Download High-Res Image"
-            >
-              <Download className="h-4 w-4" />
-            </a>
-
-            <div className="h-4 w-px bg-neutral-800 mx-1" />
-
-            <button
-              onClick={() => setLightboxFigure(null)}
-              className="p-1.5 rounded-lg text-neutral-400 hover:text-rose-400 hover:bg-neutral-900"
-              title="Close (Esc)"
-            >
-              <X className="h-5 w-5" />
-            </button>
-          </div>
-        </div>
-
-        {/* Zoomable Image Viewport */}
-        <div className="flex-1 overflow-auto p-6 bg-black flex items-center justify-center min-h-[350px]">
-          <div
-            style={{ transform: `scale(${scale})` }}
-            className="transition-transform duration-200 origin-center max-w-full"
-          >
-            <img
-              src={lightboxFigure.src}
-              alt={lightboxFigure.alt || lightboxFigure.caption}
-              className="max-h-[65vh] w-auto object-contain rounded-lg shadow-2xl border border-neutral-800 bg-neutral-950"
-            />
-          </div>
-        </div>
-
-        {/* Lightbox Caption Footer */}
-        <div className="p-4 border-t border-neutral-800 bg-black text-xs text-neutral-300 flex items-center justify-between">
-          <div>
-            <span className="font-semibold text-white mr-1.5">{lightboxFigure.caption}</span>
-            {lightboxFigure.details && (
-              <span className="text-neutral-400">{lightboxFigure.details}</span>
+        {/* Top bar */}
+        <div className="flex items-center justify-between border-b border-white/10 pb-4">
+          <div className="flex items-center space-x-3">
+            {lightboxFigure.figureNumber && (
+              <span className="font-mono text-xs font-bold text-cyber-cyan bg-cyber-cyan/10 px-3 py-1 rounded-xl border border-cyber-cyan/30 shadow-sm">
+                {lightboxFigure.figureNumber}
+              </span>
             )}
+            <h3 className="text-sm font-bold text-white font-display">
+              {lightboxFigure.caption}
+            </h3>
           </div>
 
+          <button
+            onClick={() => setLightboxFigure(null)}
+            className="p-2 rounded-2xl bg-dark-surface border border-white/10 text-slate-400 hover:text-white hover:border-white/20 transition"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* High Resolution Image Frame */}
+        <div className="relative rounded-2xl bg-dark-void/95 p-4 flex items-center justify-center min-h-[350px] max-h-[70vh] overflow-hidden border border-white/[0.06]">
+          <img
+            src={lightboxFigure.src}
+            alt={lightboxFigure.caption}
+            className="max-h-[65vh] max-w-full object-contain rounded-xl shadow-2xl"
+          />
+        </div>
+
+        {/* Details and Page Reference Footer */}
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 text-xs text-slate-400 font-mono">
+          <p className="leading-relaxed font-sans text-slate-300">
+            {lightboxFigure.details || lightboxFigure.caption}
+          </p>
           {lightboxFigure.pageRef && (
-            <span className="text-[11px] font-mono text-neutral-500 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800 flex-shrink-0 ml-2">
-              Source: PDF Page {lightboxFigure.pageRef}
+            <span className="bg-dark-void px-3 py-1 rounded-xl border border-white/10 flex-shrink-0 text-cyber-cyan font-bold">
+              PDF Page {lightboxFigure.pageRef}
             </span>
           )}
         </div>
 
       </div>
+
     </div>
   );
 };

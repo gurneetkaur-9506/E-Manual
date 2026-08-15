@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Layers, BookOpen, Filter } from 'lucide-react';
+import { Search, Layers, BookOpen, Filter, Cpu, Sparkles } from 'lucide-react';
 import { glossaryData } from '../../data/glossaryData';
 import { GlossaryTerm } from '../../types/manual';
 
@@ -20,47 +20,47 @@ export const GlossaryViewer: React.FC = () => {
   }, [searchTerm, selectedCategory]);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 bg-black text-white">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 text-slate-100">
       
       {/* Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <div className="inline-flex items-center space-x-2 rounded-full border border-neutral-700 bg-neutral-900 px-3.5 py-1 text-xs font-semibold text-neutral-200">
+        <div className="inline-flex items-center space-x-2 rounded-full border border-cyber-violet/30 bg-cyber-violet/10 px-4 py-1.5 text-xs font-semibold text-cyber-violet font-mono uppercase tracking-widest shadow-[0_0_15px_rgba(139,92,246,0.15)]">
           <Layers className="h-3.5 w-3.5" />
           <span>Section 1.3 Official Reference</span>
         </div>
-        <h2 className="text-3xl sm:text-4xl font-display font-bold text-white">
+        <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
           Technical Terms & Abbreviations
-        </h2>
-        <p className="text-xs sm:text-sm text-neutral-400">
+        </h1>
+        <p className="text-xs sm:text-sm text-slate-400 max-w-xl mx-auto leading-relaxed">
           Complete marine engineering glossary of RF connectors, satellite acronyms, navigation standards, and regulatory organizations.
         </p>
       </div>
 
       {/* Search & Category Filter Controls */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-neutral-950 p-4 rounded-2xl border border-neutral-800">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-r from-dark-panel to-dark-surface p-4.5 rounded-3xl border border-white/10 shadow-panel backdrop-blur-xl">
         
         {/* Search input */}
         <div className="relative w-full sm:w-80">
-          <Search className="absolute left-3 top-3 h-4 w-4 text-neutral-500" />
+          <Search className="absolute left-3.5 top-3 h-4 w-4 text-slate-500" />
           <input
             type="text"
             placeholder="Search acronym or definition..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full rounded-xl border border-neutral-700 bg-black py-2 pl-9 pr-4 text-xs text-white placeholder-neutral-500 focus:border-neutral-500 focus:outline-none"
+            className="w-full rounded-2xl border border-white/10 bg-dark-void/90 py-2.5 pl-10 pr-4 text-xs text-white placeholder-slate-500 focus:border-cyber-cyan focus:outline-none shadow-inner"
           />
         </div>
 
         {/* Category Pills */}
-        <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto">
+        <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition ${
+              className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 font-display ${
                 selectedCategory === cat
-                  ? 'bg-white text-black shadow-sm font-bold'
-                  : 'bg-black text-neutral-400 hover:text-white border border-neutral-800'
+                  ? 'bg-gradient-to-r from-cyber-cyan to-cyber-blue text-dark-void font-bold shadow-glow-cyan scale-105'
+                  : 'bg-dark-void text-slate-400 hover:text-white border border-white/10 hover:border-white/20'
               }`}
             >
               {cat}
@@ -71,22 +71,22 @@ export const GlossaryViewer: React.FC = () => {
       </div>
 
       {/* Glossary Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4.5">
         {filteredGlossary.map((item, idx) => (
           <div
             key={idx}
-            className="p-4.5 rounded-2xl border border-neutral-800 bg-neutral-950 hover:border-neutral-700 transition-all flex flex-col justify-between"
+            className="cyber-panel cyber-panel-hover p-5 rounded-3xl border border-white/10 bg-gradient-to-b from-dark-panel to-dark-surface flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-lg font-mono font-bold text-white">
+              <div className="flex items-center justify-between mb-2.5">
+                <span className="text-lg font-mono font-bold text-cyber-cyan tracking-tight">
                   {item.term}
                 </span>
-                <span className="text-[9px] font-semibold uppercase tracking-wider text-neutral-400 bg-black px-2 py-0.5 rounded border border-neutral-800">
+                <span className="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400 bg-dark-void px-2.5 py-0.5 rounded-full border border-white/10">
                   {item.category}
                 </span>
               </div>
-              <p className="text-xs text-neutral-300 leading-relaxed">
+              <p className="text-xs text-slate-300 leading-relaxed">
                 {item.definition}
               </p>
             </div>
@@ -95,15 +95,15 @@ export const GlossaryViewer: React.FC = () => {
       </div>
 
       {filteredGlossary.length === 0 && (
-        <div className="py-16 text-center text-neutral-500 text-sm">
+        <div className="py-16 text-center text-slate-500 text-sm">
           No glossary terms match your search filter.
         </div>
       )}
 
       {/* Summary Footer */}
-      <div className="p-4 rounded-xl border border-neutral-800 bg-black text-xs text-neutral-400 flex items-center justify-between">
+      <div className="p-4 rounded-2xl border border-white/10 bg-dark-panel text-xs text-slate-400 flex items-center justify-between font-mono">
         <span>Showing {filteredGlossary.length} of {glossaryData.length} terms</span>
-        <span className="font-mono text-neutral-300">Veripos AB-V-MA-00601_RevA5</span>
+        <span className="text-cyber-cyan font-bold">Veripos AB-V-MA-00601_RevA5</span>
       </div>
 
     </div>

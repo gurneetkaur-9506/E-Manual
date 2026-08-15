@@ -13,7 +13,9 @@ import {
   FileText, 
   Search, 
   Bookmark,
-  CheckCircle2
+  CheckCircle2,
+  Layers,
+  Sparkles
 } from 'lucide-react';
 import { useManual } from '../context/ManualContext';
 import { chaptersData } from '../data/manualContent';
@@ -69,47 +71,47 @@ export const Sidebar: React.FC = () => {
   };
 
   return (
-    <aside className="w-full lg:w-80 flex-shrink-0 border-r border-neutral-800/80 bg-black flex flex-col h-[calc(100vh-4rem)] sticky top-16 select-none">
+    <aside className="w-full lg:w-80 flex-shrink-0 border-r border-white/[0.08] bg-dark-base/95 backdrop-blur-xl flex flex-col h-[calc(100vh-4rem)] sticky top-16 select-none z-20">
       
       {/* Sidebar Header & Search Filter */}
-      <div className="p-3.5 border-b border-neutral-800/80 space-y-2.5">
+      <div className="p-4 border-b border-white/[0.08] space-y-3 bg-dark-surface/60">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-neutral-400 flex items-center space-x-1.5">
-            <BookOpen className="h-3.5 w-3.5 text-neutral-200" />
-            <span>Table of Contents</span>
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center space-x-2">
+            <span className="flex h-2 w-2 rounded-full bg-cyber-cyan shadow-[0_0_8px_#00F0FF]" />
+            <span className="font-tech tracking-wider">TABLE OF CONTENTS</span>
           </span>
-          <div className="flex items-center space-x-1 text-[10px]">
+          <div className="flex items-center space-x-1 text-[11px] font-mono">
             <button
               onClick={expandAll}
-              className="text-neutral-400 hover:text-white px-1.5 py-0.5 rounded hover:bg-neutral-900 transition"
+              className="text-slate-400 hover:text-cyber-cyan px-2 py-0.5 rounded-md hover:bg-white/[0.06] transition"
             >
-              Expand
+              EXPAND
             </button>
-            <span className="text-neutral-700">|</span>
+            <span className="text-slate-600">/</span>
             <button
               onClick={collapseAll}
-              className="text-neutral-400 hover:text-white px-1.5 py-0.5 rounded hover:bg-neutral-900 transition"
+              className="text-slate-400 hover:text-cyber-cyan px-2 py-0.5 rounded-md hover:bg-white/[0.06] transition"
             >
-              Collapse
+              COLLAPSE
             </button>
           </div>
         </div>
 
         {/* Live Filter in TOC */}
         <div className="relative">
-          <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-neutral-500" />
+          <Search className="absolute left-3 top-2.5 h-3.5 w-3.5 text-slate-500" />
           <input
             type="text"
-            placeholder="Filter sections..."
+            placeholder="Quick filter sections..."
             value={tocFilter}
             onChange={(e) => setTocFilter(e.target.value)}
-            className="w-full rounded-lg border border-neutral-800 bg-neutral-900/90 py-1.5 pl-8 pr-3 text-xs text-neutral-200 placeholder-neutral-500 focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500 transition"
+            className="w-full rounded-xl border border-white/10 bg-dark-panel/90 py-2 pl-9 pr-3 text-xs text-slate-200 placeholder-slate-500 focus:border-cyber-cyan/50 focus:outline-none focus:ring-1 focus:ring-cyber-cyan/50 transition font-medium"
           />
         </div>
       </div>
 
       {/* Chapters & Sections List */}
-      <div className="flex-1 overflow-y-auto px-2 py-3 space-y-1">
+      <div className="flex-1 overflow-y-auto px-2.5 py-3 space-y-1.5 custom-scrollbar">
         {chaptersData.map((chapter) => {
           const Icon = iconMap[chapter.iconName] || BookOpen;
           const isExpanded = expandedChapters[chapter.id] || tocFilter.length > 0;
@@ -131,7 +133,14 @@ export const Sidebar: React.FC = () => {
           }
 
           return (
-            <div key={chapter.id} className="rounded-xl border border-transparent hover:border-neutral-800/80 transition-all">
+            <div 
+              key={chapter.id} 
+              className={`rounded-2xl border transition-all duration-200 ${
+                isCurrentChapter 
+                  ? 'border-cyber-cyan/30 bg-dark-surface/90 shadow-[0_4px_20px_rgba(0,240,255,0.05)]' 
+                  : 'border-transparent hover:border-white/[0.06] hover:bg-white/[0.02]'
+              }`}
+            >
               
               {/* Chapter Header Button */}
               <button
@@ -139,38 +148,42 @@ export const Sidebar: React.FC = () => {
                   toggleChapterExpand(chapter.id);
                   navigateToSection(chapter.id, chapter.sections[0]?.id);
                 }}
-                className={`w-full flex items-center justify-between p-2 rounded-lg text-left transition-all ${
+                className={`w-full flex items-center justify-between p-2.5 rounded-xl text-left transition-all group ${
                   isCurrentChapter
-                    ? 'bg-neutral-900 text-white border-l-2 border-white font-semibold'
-                    : 'text-neutral-300 hover:bg-neutral-900/80 hover:text-white'
+                    ? 'text-white font-bold'
+                    : 'text-slate-300 hover:text-white'
                 }`}
               >
                 <div className="flex items-center space-x-2.5 truncate">
-                  <div className={`p-1 rounded-md ${isCurrentChapter ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-400'}`}>
+                  <div className={`p-1.5 rounded-lg transition-colors ${
+                    isCurrentChapter 
+                      ? 'bg-cyber-cyan text-dark-void shadow-glow-cyan font-bold' 
+                      : 'bg-dark-elevated text-slate-400 group-hover:text-cyber-cyan group-hover:bg-dark-highlight'
+                  }`}>
                     <Icon className="h-3.5 w-3.5" />
                   </div>
                   <div className="truncate">
-                    <div className="text-xs font-semibold tracking-tight truncate">
+                    <div className="text-xs font-bold tracking-tight truncate font-display">
                       {chapter.chapterNumber}. {chapter.title}
                     </div>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-1 flex-shrink-0 ml-2">
-                  <span className="text-[10px] font-mono text-neutral-500 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800">
+                <div className="flex items-center space-x-1.5 flex-shrink-0 ml-2">
+                  <span className="text-[10px] font-mono text-slate-400 bg-dark-void px-2 py-0.5 rounded-md border border-white/[0.08]">
                     p.{chapter.startPage}
                   </span>
                   {isExpanded ? (
-                    <ChevronDown className="h-3.5 w-3.5 text-neutral-400" />
+                    <ChevronDown className="h-3.5 w-3.5 text-cyber-cyan transition-transform" />
                   ) : (
-                    <ChevronRight className="h-3.5 w-3.5 text-neutral-400" />
+                    <ChevronRight className="h-3.5 w-3.5 text-slate-500 group-hover:text-slate-300 transition-transform" />
                   )}
                 </div>
               </button>
 
               {/* Sections Accordion */}
               {isExpanded && (
-                <div className="mt-1 pl-4 pr-1 space-y-0.5 border-l border-neutral-800 ml-4">
+                <div className="mt-1 pl-4 pr-1.5 pb-2 space-y-1 border-l-2 border-white/10 ml-5">
                   {filteredSections.map((sec) => {
                     const isCurrentSec = currentSectionId === sec.id;
                     const isBookmarkedSec = bookmarkedSections.includes(sec.id);
@@ -179,14 +192,14 @@ export const Sidebar: React.FC = () => {
                       <div key={sec.id}>
                         <button
                           onClick={() => navigateToSection(chapter.id, sec.id)}
-                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all ${
+                          className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-xl text-xs transition-all duration-200 ${
                             isCurrentSec
-                              ? 'bg-neutral-800 text-white font-medium border border-neutral-700 shadow-sm'
-                              : 'text-neutral-400 hover:text-neutral-200 hover:bg-neutral-900/60'
+                              ? 'bg-gradient-to-r from-cyber-cyan/20 to-cyber-violet/10 text-cyber-cyan font-semibold border border-cyber-cyan/40 shadow-glow-cyan'
+                              : 'text-slate-400 hover:text-slate-100 hover:bg-white/[0.05]'
                           }`}
                         >
-                          <span className="truncate pr-2">
-                            <span className="font-mono text-[11px] text-neutral-300 font-semibold mr-1.5">
+                          <span className="truncate pr-2 text-left">
+                            <span className="font-mono text-[11px] text-cyber-sky font-semibold mr-1.5">
                               {sec.sectionNumber}
                             </span>
                             {sec.title}
@@ -194,9 +207,9 @@ export const Sidebar: React.FC = () => {
 
                           <div className="flex items-center space-x-1 flex-shrink-0">
                             {isBookmarkedSec && (
-                              <Bookmark className="h-3 w-3 fill-white text-white" />
+                              <Bookmark className="h-3 w-3 fill-cyber-cyan text-cyber-cyan" />
                             )}
-                            <span className="text-[9px] font-mono text-neutral-600">
+                            <span className="text-[9px] font-mono text-slate-500">
                               {sec.pageNumber}
                             </span>
                           </div>
@@ -204,20 +217,20 @@ export const Sidebar: React.FC = () => {
 
                         {/* Subsections if available */}
                         {sec.subsections && sec.subsections.length > 0 && (
-                          <div className="pl-4 space-y-0.5 my-0.5">
+                          <div className="pl-4 space-y-0.5 my-1 border-l border-white/[0.06] ml-2">
                             {sec.subsections.map((sub) => {
                               const isCurrentSub = currentSectionId === sub.id;
                               return (
                                 <button
                                   key={sub.id}
                                   onClick={() => navigateToSection(chapter.id, sub.id)}
-                                  className={`w-full text-left px-2 py-1 rounded text-[11px] truncate transition-colors ${
+                                  className={`w-full text-left px-2 py-1 rounded-lg text-[11px] truncate transition-colors ${
                                     isCurrentSub
-                                      ? 'text-white font-medium bg-neutral-800'
-                                      : 'text-neutral-500 hover:text-neutral-300 hover:bg-neutral-900/40'
+                                      ? 'text-cyber-cyan font-medium bg-cyber-cyan/10'
+                                      : 'text-slate-500 hover:text-slate-300 hover:bg-white/[0.04]'
                                   }`}
                                 >
-                                  <span className="font-mono text-[10px] text-neutral-400 mr-1">
+                                  <span className="font-mono text-[10px] text-slate-400 mr-1">
                                     {sub.sectionNumber}
                                   </span>
                                   {sub.title}
@@ -236,10 +249,10 @@ export const Sidebar: React.FC = () => {
         })}
       </div>
 
-      {/* Sidebar Footer */}
-      <div className="p-3 border-t border-neutral-800 bg-black text-[11px] text-neutral-400 flex items-center justify-between">
-        <span className="font-mono">AB-V-MA-00601_RevA5</span>
-        <span className="text-neutral-300 font-semibold">43 Pages Total</span>
+      {/* Sidebar Telemetry Footer */}
+      <div className="p-3.5 border-t border-white/[0.08] bg-dark-panel/90 text-[11px] text-slate-400 flex items-center justify-between font-mono">
+        <span className="text-slate-400">AB-V-MA-00601_RevA5</span>
+        <span className="text-cyber-cyan font-bold bg-cyber-cyan/10 px-2 py-0.5 rounded-full border border-cyber-cyan/20">43 PGS</span>
       </div>
     </aside>
   );
