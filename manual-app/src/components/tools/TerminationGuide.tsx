@@ -13,20 +13,20 @@ export const TerminationGuide: React.FC = () => {
   const progressPercent = Math.round((completedCount / currentProc.steps.length) * 100);
 
   return (
-    <div className="rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div className="rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 shadow-2xl space-y-8 text-neutral-200">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
         <div>
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+            <div className="p-2 rounded-xl bg-neutral-800 text-white">
               <Wrench className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
               Interactive Connector Termination & Checklist
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Step-by-step assembly instructions, required specialized tooling, and quality checkpoints (Section 8.6).
           </p>
         </div>
@@ -34,7 +34,7 @@ export const TerminationGuide: React.FC = () => {
         <div className="flex items-center space-x-2">
           <button
             onClick={resetChecklist}
-            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-slate-700 bg-slate-950 text-xs text-slate-400 hover:text-white hover:bg-slate-800 transition"
+            className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg border border-neutral-700 bg-black text-xs text-neutral-400 hover:text-white hover:bg-neutral-800 transition"
           >
             <RotateCcw className="h-3.5 w-3.5" />
             <span>Reset Checklist</span>
@@ -43,7 +43,7 @@ export const TerminationGuide: React.FC = () => {
       </div>
 
       {/* Procedure Selector Tabs */}
-      <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-4">
+      <div className="flex flex-wrap gap-2 border-b border-neutral-800 pb-4">
         {terminationProceduresData.map((proc) => {
           const isSelected = proc.id === selectedProcId;
           return (
@@ -52,8 +52,8 @@ export const TerminationGuide: React.FC = () => {
               onClick={() => setSelectedProcId(proc.id)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 isSelected
-                  ? 'bg-cyan-500 text-slate-950 shadow-glow-cyan'
-                  : 'bg-slate-950 text-slate-400 hover:text-white border border-slate-800'
+                  ? 'bg-white text-black shadow-sm font-bold'
+                  : 'bg-black text-neutral-400 hover:text-white border border-neutral-800'
               }`}
             >
               {proc.cableType} ({proc.connectorType})
@@ -66,44 +66,44 @@ export const TerminationGuide: React.FC = () => {
       <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
         
         {/* Left: Tools & Materials */}
-        <div className="md:col-span-5 space-y-4 bg-slate-950/70 p-5 rounded-2xl border border-slate-800">
+        <div className="md:col-span-5 space-y-4 bg-black p-5 rounded-2xl border border-neutral-800">
           <div>
-            <span className="text-[10px] uppercase font-bold text-cyan-400 tracking-wider block">
+            <span className="text-[10px] uppercase font-bold text-neutral-300 tracking-wider block">
               Required Tooling
             </span>
-            <ul className="mt-2 space-y-1.5 text-xs text-slate-300">
+            <ul className="mt-2 space-y-1.5 text-xs text-neutral-300">
               {currentProc.toolsRequired.map((tool, idx) => (
                 <li key={idx} className="flex items-center space-x-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-white" />
                   <span>{tool}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="pt-3 border-t border-slate-800">
-            <span className="text-[10px] uppercase font-bold text-sky-400 tracking-wider block">
+          <div className="pt-3 border-t border-neutral-800">
+            <span className="text-[10px] uppercase font-bold text-neutral-400 tracking-wider block">
               Materials & Kits
             </span>
-            <ul className="mt-2 space-y-1.5 text-xs text-slate-300">
+            <ul className="mt-2 space-y-1.5 text-xs text-neutral-300">
               {currentProc.materialsRequired.map((mat, idx) => (
                 <li key={idx} className="flex items-center space-x-2">
-                  <span className="h-1.5 w-1.5 rounded-full bg-sky-400" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-neutral-400" />
                   <span>{mat}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="pt-3 border-t border-slate-800">
+          <div className="pt-3 border-t border-neutral-800">
             <div className="flex justify-between text-xs font-mono mb-1">
-              <span className="text-slate-400">Procedure Progress:</span>
-              <span className="text-cyan-400 font-bold">{completedCount} / {currentProc.steps.length} Steps</span>
+              <span className="text-neutral-400">Procedure Progress:</span>
+              <span className="text-white font-bold">{completedCount} / {currentProc.steps.length} Steps</span>
             </div>
-            <div className="h-2 w-full rounded-full bg-slate-900 overflow-hidden">
+            <div className="h-2 w-full rounded-full bg-neutral-900 overflow-hidden border border-neutral-800">
               <div
                 style={{ width: `${progressPercent}%` }}
-                className="h-full bg-gradient-to-r from-cyan-500 to-emerald-400 transition-all duration-300"
+                className="h-full bg-gradient-to-r from-neutral-400 to-emerald-400 transition-all duration-300"
               />
             </div>
           </div>
@@ -120,8 +120,8 @@ export const TerminationGuide: React.FC = () => {
                 key={step.stepNumber}
                 className={`p-4 rounded-2xl border transition-all ${
                   isCompleted
-                    ? 'border-emerald-500/40 bg-emerald-950/15'
-                    : 'border-slate-800 bg-slate-950/40 hover:border-slate-700'
+                    ? 'border-emerald-500/40 bg-emerald-950/20'
+                    : 'border-neutral-800 bg-black hover:border-neutral-700'
                 }`}
               >
                 <div className="flex items-start space-x-3.5">
@@ -129,8 +129,8 @@ export const TerminationGuide: React.FC = () => {
                     onClick={() => toggleChecklistStep(stepKey)}
                     className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-lg border transition-all flex-shrink-0 ${
                       isCompleted
-                        ? 'border-emerald-400 bg-emerald-500 text-slate-950 font-bold'
-                        : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-cyan-400'
+                        ? 'border-emerald-400 bg-emerald-500 text-black font-bold'
+                        : 'border-neutral-700 bg-neutral-900 text-neutral-400 hover:border-white hover:text-white'
                     }`}
                   >
                     {isCompleted ? <Check className="h-3.5 w-3.5" /> : <span className="text-xs font-bold">{step.stepNumber}</span>}
@@ -140,10 +140,10 @@ export const TerminationGuide: React.FC = () => {
                     <h5 className={`text-xs font-bold ${isCompleted ? 'text-emerald-300 line-through' : 'text-white'}`}>
                       Step {step.stepNumber}: {step.title}
                     </h5>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-neutral-300 leading-relaxed">
                       {step.description}
                     </p>
-                    <p className="text-[11px] text-slate-400">
+                    <p className="text-[11px] text-neutral-400">
                       {step.details}
                     </p>
                     {step.criticalNotes && (

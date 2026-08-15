@@ -42,19 +42,19 @@ export const PdfSplitView: React.FC = () => {
   };
 
   return (
-    <div className="w-full lg:w-[480px] xl:w-[560px] flex-shrink-0 border-l border-cyan-500/20 bg-slate-950 flex flex-col h-[calc(100vh-4rem)] sticky top-16 shadow-2xl z-30">
+    <div className="w-full lg:w-[480px] xl:w-[560px] flex-shrink-0 border-l border-neutral-800 bg-black flex flex-col h-[calc(100vh-4rem)] sticky top-16 shadow-2xl z-30">
       
       {/* Split View Header */}
-      <div className="p-3 border-b border-slate-800 bg-slate-900/90 flex items-center justify-between">
+      <div className="p-3 border-b border-neutral-800 bg-neutral-950 flex items-center justify-between">
         <div className="flex items-center space-x-2">
-          <div className="p-1 rounded bg-cyan-500/20 text-cyan-400">
+          <div className="p-1 rounded bg-neutral-800 text-white">
             <FileText className="h-4 w-4" />
           </div>
           <div>
             <span className="text-xs font-bold text-white block">
               Original PDF Synchronizer
             </span>
-            <span className="text-[10px] font-mono text-slate-400">
+            <span className="text-[10px] font-mono text-neutral-400">
               Source: {manualMetadata.documentRef}
             </span>
           </div>
@@ -64,35 +64,35 @@ export const PdfSplitView: React.FC = () => {
           {/* Zoom controls */}
           <button
             onClick={() => setZoomLevel((prev) => Math.max(50, prev - 15))}
-            className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded text-neutral-400 hover:text-white hover:bg-neutral-800"
             title="Zoom Out"
           >
             <ZoomOut className="h-3.5 w-3.5" />
           </button>
-          <span className="text-[10px] font-mono text-cyan-400 w-10 text-center">
+          <span className="text-[10px] font-mono text-neutral-200 w-10 text-center">
             {zoomLevel}%
           </span>
           <button
             onClick={() => setZoomLevel((prev) => Math.min(200, prev + 15))}
-            className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded text-neutral-400 hover:text-white hover:bg-neutral-800"
             title="Zoom In"
           >
             <ZoomIn className="h-3.5 w-3.5" />
           </button>
           <button
             onClick={() => setZoomLevel(100)}
-            className="p-1 rounded text-slate-400 hover:text-white hover:bg-slate-800"
+            className="p-1 rounded text-neutral-400 hover:text-white hover:bg-neutral-800"
             title="Reset Zoom"
           >
             <RotateCcw className="h-3.5 w-3.5" />
           </button>
           
-          <div className="h-4 w-px bg-slate-800 mx-1" />
+          <div className="h-4 w-px bg-neutral-800 mx-1" />
 
           {/* Close split view */}
           <button
             onClick={() => setPdfSplitView(false)}
-            className="p-1 rounded text-slate-400 hover:text-rose-400 hover:bg-slate-800"
+            className="p-1 rounded text-neutral-400 hover:text-rose-400 hover:bg-neutral-800"
             title="Close Split View"
           >
             <X className="h-4 w-4" />
@@ -101,11 +101,11 @@ export const PdfSplitView: React.FC = () => {
       </div>
 
       {/* Page Navigation Toolbar */}
-      <div className="px-3 py-2 border-b border-slate-800/80 bg-slate-950 flex items-center justify-between text-xs">
+      <div className="px-3 py-2 border-b border-neutral-800 bg-black flex items-center justify-between text-xs">
         <button
           onClick={handlePrevPage}
           disabled={selectedPage <= 1}
-          className="flex items-center space-x-1 px-2 py-1 rounded bg-slate-900 border border-slate-800 disabled:opacity-30 hover:bg-slate-800 text-slate-300 transition"
+          className="flex items-center space-x-1 px-2 py-1 rounded bg-neutral-900 border border-neutral-800 disabled:opacity-30 hover:bg-neutral-800 text-neutral-300 transition"
         >
           <ChevronLeft className="h-3.5 w-3.5" />
           <span>Prev</span>
@@ -120,7 +120,7 @@ export const PdfSplitView: React.FC = () => {
               setSelectedPage(p);
               navigateToPage(p);
             }}
-            className="bg-slate-900 border border-slate-700 rounded px-1.5 py-0.5 text-cyan-300 font-bold focus:outline-none focus:border-cyan-500"
+            className="bg-neutral-900 border border-neutral-700 rounded px-1.5 py-0.5 text-white font-bold focus:outline-none focus:border-neutral-500"
           >
             {Array.from({ length: manualMetadata.totalPages }, (_, i) => (
               <option key={i + 1} value={i + 1}>
@@ -128,13 +128,13 @@ export const PdfSplitView: React.FC = () => {
               </option>
             ))}
           </select>
-          <span className="text-slate-500">of {manualMetadata.totalPages}</span>
+          <span className="text-neutral-500">of {manualMetadata.totalPages}</span>
         </div>
 
         <button
           onClick={handleNextPage}
           disabled={selectedPage >= manualMetadata.totalPages}
-          className="flex items-center space-x-1 px-2 py-1 rounded bg-slate-900 border border-slate-800 disabled:opacity-30 hover:bg-slate-800 text-slate-300 transition"
+          className="flex items-center space-x-1 px-2 py-1 rounded bg-neutral-900 border border-neutral-800 disabled:opacity-30 hover:bg-neutral-800 text-neutral-300 transition"
         >
           <span>Next</span>
           <ChevronRight className="h-3.5 w-3.5" />
@@ -142,10 +142,10 @@ export const PdfSplitView: React.FC = () => {
       </div>
 
       {/* Rendered PDF Page Viewport */}
-      <div className="flex-1 overflow-auto p-4 bg-slate-900/40 flex items-start justify-center">
+      <div className="flex-1 overflow-auto p-4 bg-neutral-950 flex items-start justify-center">
         <div 
           style={{ width: `${zoomLevel}%` }}
-          className="transition-all duration-200 shadow-2xl rounded-lg overflow-hidden border border-slate-700 bg-white"
+          className="transition-all duration-200 shadow-2xl rounded-lg overflow-hidden border border-neutral-800 bg-white"
         >
           <img
             src={`/assets/pdf_pages/page_${selectedPage}.webp`}
@@ -156,12 +156,12 @@ export const PdfSplitView: React.FC = () => {
       </div>
 
       {/* Split View Footer */}
-      <div className="p-2.5 border-t border-slate-800 bg-slate-950 text-[11px] text-slate-400 flex items-center justify-between">
+      <div className="p-2.5 border-t border-neutral-800 bg-black text-[11px] text-neutral-400 flex items-center justify-between">
         <span className="text-emerald-400 flex items-center space-x-1">
           <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 inline-block" />
           <span>Synchronized with E-Manual</span>
         </span>
-        <span className="font-mono text-slate-500">Page {selectedPage} / 43</span>
+        <span className="font-mono text-neutral-500">Page {selectedPage} / 43</span>
       </div>
     </div>
   );

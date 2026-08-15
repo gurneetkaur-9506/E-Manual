@@ -40,29 +40,29 @@ export const CableCalculator: React.FC = () => {
   ];
 
   return (
-    <div className="rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div className="rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 shadow-2xl space-y-8 text-neutral-200">
       
       {/* Title Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
         <div>
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+            <div className="p-2 rounded-xl bg-neutral-800 text-white">
               <Calculator className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
               RF Coaxial Cable Attenuation & Max Length Calculator
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Calculate total signal loss and verify compliance with the official Veripos 10 dB loss threshold (Section 8.1).
           </p>
         </div>
 
-        <div className="flex items-center space-x-2 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
+        <div className="flex items-center space-x-2 bg-black p-1 rounded-xl border border-neutral-800 self-start sm:self-auto">
           <button
             onClick={() => setUnit('m')}
             className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              unit === 'm' ? 'bg-cyan-500 text-slate-950' : 'text-slate-400 hover:text-white'
+              unit === 'm' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
             Meters (m)
@@ -70,7 +70,7 @@ export const CableCalculator: React.FC = () => {
           <button
             onClick={() => setUnit('ft')}
             className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              unit === 'ft' ? 'bg-cyan-500 text-slate-950' : 'text-slate-400 hover:text-white'
+              unit === 'ft' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
             Feet (ft)
@@ -83,13 +83,13 @@ export const CableCalculator: React.FC = () => {
         
         {/* 1. Select Cable Type */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <label className="text-xs font-bold uppercase tracking-wider text-neutral-300">
             Coaxial Cable Model
           </label>
           <select
             value={selectedCableId}
             onChange={(e) => setSelectedCableId(e.target.value)}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-xs text-cyan-300 font-semibold focus:border-cyan-500 focus:outline-none"
+            className="w-full rounded-xl border border-neutral-700 bg-black p-3 text-xs text-white font-semibold focus:border-neutral-500 focus:outline-none"
           >
             {cableSpecsData.map((c) => (
               <option key={c.id} value={c.id}>
@@ -97,7 +97,7 @@ export const CableCalculator: React.FC = () => {
               </option>
             ))}
           </select>
-          <p className="text-[11px] text-slate-400">
+          <p className="text-[11px] text-neutral-400">
             {selectedCable.type} • {selectedCable.diameterMm} mm outer dia.
           </p>
         </div>
@@ -105,10 +105,10 @@ export const CableCalculator: React.FC = () => {
         {/* 2. Cable Length Input */}
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <label className="text-xs font-bold uppercase tracking-wider text-neutral-300">
               Total Route Length
             </label>
-            <span className="font-mono text-xs font-bold text-cyan-400">
+            <span className="font-mono text-xs font-bold text-white">
               {lengthM} {unit} ({unit === 'm' ? `${lengthInFeet.toFixed(0)} ft` : `${lengthInMeters.toFixed(1)} m`})
             </span>
           </div>
@@ -119,7 +119,7 @@ export const CableCalculator: React.FC = () => {
             step={1}
             value={lengthM}
             onChange={(e) => setLengthM(Number(e.target.value))}
-            className="w-full accent-cyan-400 h-2 bg-slate-950 rounded-lg cursor-pointer"
+            className="w-full accent-white h-2 bg-neutral-900 rounded-lg cursor-pointer"
           />
           <div className="flex items-center space-x-2">
             <input
@@ -128,21 +128,21 @@ export const CableCalculator: React.FC = () => {
               max={500}
               value={lengthM}
               onChange={(e) => setLengthM(Math.max(1, Number(e.target.value)))}
-              className="w-24 rounded-lg border border-slate-700 bg-slate-950 px-2.5 py-1 text-xs text-white font-mono"
+              className="w-24 rounded-lg border border-neutral-700 bg-black px-2.5 py-1 text-xs text-white font-mono"
             />
-            <span className="text-xs text-slate-400">{unit} total run</span>
+            <span className="text-xs text-neutral-400">{unit} total run</span>
           </div>
         </div>
 
         {/* 3. Frequency & Connectors */}
         <div className="space-y-2">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+          <label className="text-xs font-bold uppercase tracking-wider text-neutral-300">
             Operating Frequency Band
           </label>
           <select
             value={freqMhz}
             onChange={(e) => setFreqMhz(Number(e.target.value))}
-            className="w-full rounded-xl border border-slate-700 bg-slate-950 p-3 text-xs text-slate-200 focus:border-cyan-500 focus:outline-none"
+            className="w-full rounded-xl border border-neutral-700 bg-black p-3 text-xs text-white focus:border-neutral-500 focus:outline-none"
           >
             {frequencyOptions.map((f, i) => (
               <option key={i} value={f.value}>
@@ -152,11 +152,11 @@ export const CableCalculator: React.FC = () => {
           </select>
 
           <div className="flex items-center justify-between pt-1">
-            <span className="text-[11px] text-slate-400">Connector Pairs:</span>
+            <span className="text-[11px] text-neutral-400">Connector Pairs:</span>
             <select
               value={numConnectors}
               onChange={(e) => setNumConnectors(Number(e.target.value))}
-              className="rounded-lg border border-slate-700 bg-slate-950 px-2 py-0.5 text-xs text-slate-300"
+              className="rounded-lg border border-neutral-700 bg-black px-2 py-0.5 text-xs text-neutral-300"
             >
               <option value={2}>2 (Antenna + Receiver)</option>
               <option value={4}>4 (With Lightning Arrestor & Jumper)</option>
@@ -199,7 +199,7 @@ export const CableCalculator: React.FC = () => {
               </span>
             </div>
 
-            <p className="text-xs text-slate-300 max-w-xl">
+            <p className="text-xs text-neutral-300 max-w-xl">
               {isPass
                 ? isWarning
                   ? `Total attenuation is ${totalLossDb.toFixed(2)} dB, which is approaching the 10.0 dB limit. Consider stepping up to Heliax LDF4-50A if extra jumper tails or surge arrestors are added.`
@@ -210,9 +210,9 @@ export const CableCalculator: React.FC = () => {
           </div>
 
           {/* Big Number Summary */}
-          <div className="flex items-center space-x-6 bg-slate-950/80 p-4 rounded-xl border border-slate-800 self-start md:self-auto">
+          <div className="flex items-center space-x-6 bg-black p-4 rounded-xl border border-neutral-800 self-start md:self-auto">
             <div>
-              <span className="text-[10px] uppercase font-bold text-slate-500 block">Total RF Loss</span>
+              <span className="text-[10px] uppercase font-bold text-neutral-500 block">Total RF Loss</span>
               <span className={`text-3xl font-mono font-black ${
                 isPass ? (isWarning ? 'text-amber-400' : 'text-emerald-400') : 'text-rose-400'
               }`}>
@@ -220,11 +220,11 @@ export const CableCalculator: React.FC = () => {
               </span>
             </div>
 
-            <div className="h-10 w-px bg-slate-800" />
+            <div className="h-10 w-px bg-neutral-800" />
 
             <div>
-              <span className="text-[10px] uppercase font-bold text-slate-500 block">Max Limit</span>
-              <span className="text-3xl font-mono font-black text-cyan-400">
+              <span className="text-[10px] uppercase font-bold text-neutral-500 block">Max Limit</span>
+              <span className="text-3xl font-mono font-black text-white">
                 10.0 <span className="text-sm font-normal">dB</span>
               </span>
             </div>
@@ -235,19 +235,19 @@ export const CableCalculator: React.FC = () => {
         {/* Progress bar */}
         <div className="mt-6 space-y-1.5">
           <div className="flex justify-between text-[11px] font-mono">
-            <span className="text-slate-400">Loss Budget Consumption:</span>
-            <span className={isPass ? 'text-cyan-300 font-bold' : 'text-rose-400 font-bold'}>
+            <span className="text-neutral-400">Loss Budget Consumption:</span>
+            <span className={isPass ? 'text-white font-bold' : 'text-rose-400 font-bold'}>
               {lossPercentage.toFixed(1)}% of 10 dB Limit
             </span>
           </div>
-          <div className="h-2.5 w-full rounded-full bg-slate-950 overflow-hidden border border-slate-800 p-0.5">
+          <div className="h-2.5 w-full rounded-full bg-black overflow-hidden border border-neutral-800 p-0.5">
             <div
               style={{ width: `${Math.min(100, lossPercentage)}%` }}
               className={`h-full rounded-full transition-all duration-300 ${
                 isPass 
                   ? isWarning 
-                    ? 'bg-gradient-to-r from-cyan-500 to-amber-400' 
-                    : 'bg-gradient-to-r from-cyan-500 to-emerald-400'
+                    ? 'bg-gradient-to-r from-neutral-400 to-amber-400' 
+                    : 'bg-gradient-to-r from-neutral-400 to-emerald-400'
                   : 'bg-gradient-to-r from-amber-500 to-rose-500'
               }`}
             />
@@ -258,20 +258,20 @@ export const CableCalculator: React.FC = () => {
 
       {/* Specifications Breakdown Table */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-mono">
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span className="text-slate-500 block text-[10px]">Cable Attenuation</span>
+        <div className="bg-black p-3 rounded-xl border border-neutral-800">
+          <span className="text-neutral-500 block text-[10px]">Cable Attenuation</span>
           <span className="text-white font-bold">{rawCableLossDb.toFixed(2)} dB</span>
         </div>
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span className="text-slate-500 block text-[10px]">Connectors Loss</span>
+        <div className="bg-black p-3 rounded-xl border border-neutral-800">
+          <span className="text-neutral-500 block text-[10px]">Connectors Loss</span>
           <span className="text-white font-bold">{connectorLossDb.toFixed(2)} dB</span>
         </div>
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span className="text-slate-500 block text-[10px]">Min Bend Radius (Dyn)</span>
+        <div className="bg-black p-3 rounded-xl border border-neutral-800">
+          <span className="text-neutral-500 block text-[10px]">Min Bend Radius (Dyn)</span>
           <span className="text-white font-bold">{selectedCable.minBendRadiusDynamicMm} mm</span>
         </div>
-        <div className="bg-slate-950 p-3 rounded-xl border border-slate-800">
-          <span className="text-slate-500 block text-[10px]">Cable Weight</span>
+        <div className="bg-black p-3 rounded-xl border border-neutral-800">
+          <span className="text-neutral-500 block text-[10px]">Cable Weight</span>
           <span className="text-white font-bold">{(selectedCable.weightKgM * lengthInMeters).toFixed(1)} kg</span>
         </div>
       </div>

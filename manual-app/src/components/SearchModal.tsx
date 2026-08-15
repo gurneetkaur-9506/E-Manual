@@ -52,16 +52,16 @@ export const SearchModal: React.FC = () => {
   ];
 
   return (
-    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/85 backdrop-blur-md animate-in fade-in duration-200">
       
       {/* Backdrop click to close */}
       <div className="absolute inset-0" onClick={() => setIsSearchOpen(false)} />
 
-      <div className="relative w-full max-w-2xl rounded-2xl border border-cyan-500/30 bg-slate-900 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] z-10">
+      <div className="relative w-full max-w-2xl rounded-2xl border border-neutral-800 bg-neutral-950 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] z-10">
         
         {/* Search Input Box */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-800 bg-slate-950">
-          <Search className="h-5 w-5 text-cyan-400 mr-3 flex-shrink-0" />
+        <div className="flex items-center px-4 py-3.5 border-b border-neutral-800 bg-black">
+          <Search className="h-5 w-5 text-neutral-400 mr-3 flex-shrink-0" />
           <input
             type="text"
             autoFocus
@@ -69,19 +69,19 @@ export const SearchModal: React.FC = () => {
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
-            className="w-full bg-transparent text-sm text-white placeholder-slate-500 focus:outline-none font-medium"
+            className="w-full bg-transparent text-sm text-white placeholder-neutral-500 focus:outline-none font-medium"
           />
           {query && (
             <button
               onClick={() => setQuery('')}
-              className="p-1 rounded text-slate-500 hover:text-white mr-2"
+              className="p-1 rounded text-neutral-500 hover:text-white mr-2"
             >
               <X className="h-4 w-4" />
             </button>
           )}
           <button
             onClick={() => setIsSearchOpen(false)}
-            className="rounded-lg bg-slate-800 px-2 py-1 text-[10px] font-mono text-slate-400 hover:bg-slate-700"
+            className="rounded-lg bg-neutral-900 px-2 py-1 text-[10px] font-mono text-neutral-400 hover:bg-neutral-800"
           >
             ESC
           </button>
@@ -89,8 +89,8 @@ export const SearchModal: React.FC = () => {
 
         {/* Quick Suggestion Pills if no query */}
         {!query && (
-          <div className="p-4 border-b border-slate-800/80 bg-slate-900/50">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+          <div className="p-4 border-b border-neutral-800/80 bg-neutral-900/50">
+            <span className="text-[11px] font-bold text-neutral-400 uppercase tracking-wider block mb-2">
               Popular Search Topics:
             </span>
             <div className="flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ export const SearchModal: React.FC = () => {
                 <button
                   key={term}
                   onClick={() => setQuery(term)}
-                  className="rounded-lg border border-slate-800 bg-slate-950 px-2.5 py-1 text-xs text-slate-300 hover:border-cyan-500/50 hover:text-cyan-300 transition"
+                  className="rounded-lg border border-neutral-800 bg-black px-2.5 py-1 text-xs text-neutral-300 hover:border-neutral-600 hover:text-white transition"
                 >
                   {term}
                 </button>
@@ -110,10 +110,10 @@ export const SearchModal: React.FC = () => {
         {/* Results List */}
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           {query && results.length === 0 && (
-            <div className="py-12 text-center text-slate-500 text-sm">
-              No results found for <span className="text-cyan-400 font-semibold">"{query}"</span>.
+            <div className="py-12 text-center text-neutral-500 text-sm">
+              No results found for <span className="text-white font-semibold">"{query}"</span>.
               <br />
-              <span className="text-xs text-slate-600 mt-1 block">
+              <span className="text-xs text-neutral-600 mt-1 block">
                 Try searching for cable part numbers, satellite constellations, or procedures.
               </span>
             </div>
@@ -129,13 +129,13 @@ export const SearchModal: React.FC = () => {
                 onMouseEnter={() => setSelectedIndex(idx)}
                 className={`p-3 rounded-xl cursor-pointer transition-all ${
                   isSelected
-                    ? 'bg-cyan-500/15 border border-cyan-500/40 shadow-glow-cyan'
-                    : 'border border-transparent hover:bg-slate-800/60'
+                    ? 'bg-neutral-900 border border-neutral-700 shadow-sm'
+                    : 'border border-transparent hover:bg-neutral-900/60'
                 }`}
               >
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center space-x-2 truncate">
-                    <span className="font-mono text-xs font-bold text-cyan-400">
+                    <span className="font-mono text-xs font-bold text-white">
                       {res.sectionNumber}
                     </span>
                     <span className="text-xs font-semibold text-white truncate">
@@ -144,23 +144,23 @@ export const SearchModal: React.FC = () => {
                   </div>
 
                   <div className="flex items-center space-x-1.5 flex-shrink-0 ml-2">
-                    <span className="text-[10px] font-mono text-slate-400 bg-slate-950 px-1.5 py-0.5 rounded border border-slate-800">
+                    <span className="text-[10px] font-mono text-neutral-400 bg-black px-1.5 py-0.5 rounded border border-neutral-800">
                       Page {res.pageNumber}
                     </span>
-                    <span className="text-[9px] uppercase font-bold text-cyan-300 bg-cyan-950 px-1.5 py-0.5 rounded border border-cyan-800">
+                    <span className="text-[9px] uppercase font-bold text-neutral-300 bg-neutral-900 px-1.5 py-0.5 rounded border border-neutral-800">
                       {res.matchType}
                     </span>
                   </div>
                 </div>
 
-                <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed">
+                <p className="text-xs text-neutral-300 line-clamp-2 leading-relaxed">
                   {res.snippet}
                 </p>
 
                 {isSelected && (
-                  <div className="mt-2 flex items-center justify-between text-[11px] text-cyan-400 font-medium pt-1 border-t border-cyan-500/20">
-                    <span className="text-slate-400">Chapter {res.chapterNumber}: {res.chapterTitle}</span>
-                    <span className="flex items-center space-x-1">
+                  <div className="mt-2 flex items-center justify-between text-[11px] text-neutral-300 font-medium pt-1 border-t border-neutral-800">
+                    <span className="text-neutral-400">Chapter {res.chapterNumber}: {res.chapterTitle}</span>
+                    <span className="flex items-center space-x-1 text-white">
                       <span>Jump to section</span>
                       <CornerDownLeft className="h-3 w-3" />
                     </span>
@@ -172,12 +172,12 @@ export const SearchModal: React.FC = () => {
         </div>
 
         {/* Modal Footer */}
-        <div className="p-3 border-t border-slate-800 bg-slate-950 flex items-center justify-between text-[11px] text-slate-400">
+        <div className="p-3 border-t border-neutral-800 bg-black flex items-center justify-between text-[11px] text-neutral-400">
           <div className="flex items-center space-x-3">
-            <span><kbd className="bg-slate-800 px-1.5 py-0.5 rounded font-mono text-[9px]">↑</kbd> <kbd className="bg-slate-800 px-1.5 py-0.5 rounded font-mono text-[9px]">↓</kbd> Navigate</span>
-            <span><kbd className="bg-slate-800 px-1.5 py-0.5 rounded font-mono text-[9px]">Enter</kbd> Open</span>
+            <span><kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">↑</kbd> <kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">↓</kbd> Navigate</span>
+            <span><kbd className="bg-neutral-800 px-1.5 py-0.5 rounded font-mono text-[9px] text-neutral-300">Enter</kbd> Open</span>
           </div>
-          <span className="font-mono text-cyan-400">
+          <span className="font-mono text-neutral-300">
             {results.length} matches found
           </span>
         </div>

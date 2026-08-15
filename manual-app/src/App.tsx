@@ -15,17 +15,17 @@ const AppContent: React.FC = () => {
   const { activeTab, pdfSplitView } = useManual();
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col bg-black text-neutral-100 font-sans selection:bg-neutral-800 selection:text-white">
       
       {/* Top Navbar */}
       <Header />
 
       {/* Main Content Area */}
-      <main className="flex-1">
+      <main className="flex-1 bg-black">
         {activeTab === 'landing' && <LandingHero />}
 
         {activeTab === 'manual' && (
-          <div className="flex flex-col lg:flex-row w-full min-h-[calc(100vh-4rem)]">
+          <div className="flex flex-col lg:flex-row w-full min-h-[calc(100vh-4rem)] bg-black">
             <Sidebar />
             <ManualViewer />
             {pdfSplitView && <PdfSplitView />}

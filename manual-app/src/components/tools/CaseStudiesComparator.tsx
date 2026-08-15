@@ -114,30 +114,30 @@ export const CaseStudiesComparator: React.FC = () => {
   const filteredStudies = caseStudies.filter((c) => filterType === 'all' || c.type === filterType);
 
   return (
-    <div className="rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div className="rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 shadow-2xl space-y-8 text-neutral-200">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
         <div>
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+            <div className="p-2 rounded-xl bg-neutral-800 text-white">
               <Eye className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
               Installation Quality Inspector (Good vs Bad Practice)
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Visual inspection and failure analysis of real-world vessel installations (Chapter 7).
           </p>
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center space-x-1.5 bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
+        <div className="flex items-center space-x-1.5 bg-black p-1 rounded-xl border border-neutral-800 self-start sm:self-auto">
           <button
             onClick={() => setFilterType('all')}
             className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'all' ? 'bg-cyan-500 text-slate-950' : 'text-slate-400 hover:text-white'
+              filterType === 'all' ? 'bg-white text-black' : 'text-neutral-400 hover:text-white'
             }`}
           >
             All Examples
@@ -145,7 +145,7 @@ export const CaseStudiesComparator: React.FC = () => {
           <button
             onClick={() => setFilterType('bad')}
             className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'bad' ? 'bg-rose-500 text-white' : 'text-slate-400 hover:text-white'
+              filterType === 'bad' ? 'bg-rose-500 text-white' : 'text-neutral-400 hover:text-white'
             }`}
           >
             Bad Practices (4)
@@ -153,7 +153,7 @@ export const CaseStudiesComparator: React.FC = () => {
           <button
             onClick={() => setFilterType('good')}
             className={`px-3 py-1 text-xs font-bold rounded-lg transition ${
-              filterType === 'good' ? 'bg-emerald-500 text-slate-950' : 'text-slate-400 hover:text-white'
+              filterType === 'good' ? 'bg-emerald-500 text-black font-bold' : 'text-neutral-400 hover:text-white'
             }`}
           >
             Good Practices (3)
@@ -171,8 +171,8 @@ export const CaseStudiesComparator: React.FC = () => {
               key={study.id}
               className={`rounded-2xl border p-5 transition-all flex flex-col justify-between ${
                 isBad
-                  ? 'border-rose-500/30 bg-rose-950/10 hover:border-rose-500/50'
-                  : 'border-emerald-500/30 bg-emerald-950/10 hover:border-emerald-500/50'
+                  ? 'border-rose-500/30 bg-rose-950/15 hover:border-rose-500/50'
+                  : 'border-emerald-500/30 bg-emerald-950/15 hover:border-emerald-500/50'
               }`}
             >
               <div>
@@ -186,7 +186,7 @@ export const CaseStudiesComparator: React.FC = () => {
                     <span>{isBad ? 'FAILURE MODE / HAZARD' : 'APPROVED BEST PRACTICE'}</span>
                   </span>
 
-                  <span className="text-[10px] font-mono text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
+                  <span className="text-[10px] font-mono text-neutral-400 bg-black px-2 py-0.5 rounded border border-neutral-800">
                     Sec {study.sectionRef} • p.{study.pageRef}
                   </span>
                 </div>
@@ -203,33 +203,33 @@ export const CaseStudiesComparator: React.FC = () => {
                     figureNumber: study.figureNumber,
                     pageRef: study.pageRef
                   })}
-                  className="cursor-zoom-in relative rounded-xl overflow-hidden bg-slate-950 p-2 mb-4 group border border-slate-800"
+                  className="cursor-zoom-in relative rounded-xl overflow-hidden bg-black p-2 mb-4 group border border-neutral-800"
                 >
                   <img
                     src={study.figureSrc}
                     alt={study.caption}
                     className="max-h-48 w-full object-contain rounded-lg group-hover:scale-105 transition-transform"
                   />
-                  <div className="absolute top-2 right-2 bg-slate-900/80 p-1 rounded text-cyan-400 opacity-0 group-hover:opacity-100 transition">
+                  <div className="absolute top-2 right-2 bg-neutral-900/90 p-1 rounded text-white opacity-0 group-hover:opacity-100 transition border border-neutral-700">
                     <ZoomIn className="h-4 w-4" />
                   </div>
                 </div>
 
                 {/* Details */}
-                <div className="space-y-2 text-xs text-slate-300">
+                <div className="space-y-2 text-xs text-neutral-300">
                   <div>
-                    <span className="font-bold text-slate-400 block">{isBad ? 'Observed Defect:' : 'Design Feature:'}</span>
+                    <span className="font-bold text-neutral-400 block">{isBad ? 'Observed Defect:' : 'Design Feature:'}</span>
                     <p>{study.issueOrFeature}</p>
                   </div>
 
                   <div>
-                    <span className="font-bold text-slate-400 block">{isBad ? 'Operational Impact:' : 'Operational Advantage:'}</span>
+                    <span className="font-bold text-neutral-400 block">{isBad ? 'Operational Impact:' : 'Operational Advantage:'}</span>
                     <p>{study.impactOrBenefit}</p>
                   </div>
 
                   {study.correctiveAction && (
-                    <div className="mt-2 p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-cyan-300">
-                      <span className="font-bold text-cyan-400 block text-[11px]">Required Remedy:</span>
+                    <div className="mt-2 p-2.5 rounded-lg bg-black border border-neutral-800 text-neutral-200">
+                      <span className="font-bold text-white block text-[11px]">Required Remedy:</span>
                       <p>{study.correctiveAction}</p>
                     </div>
                   )}

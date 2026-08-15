@@ -4,10 +4,17 @@
 
 @layer base {
   :root {
-    --bg-main: #060913;
-    --bg-card: rgba(13, 21, 39, 0.7);
-    --border-card: rgba(56, 170, 246, 0.15);
-    --accent-glow: rgba(0, 242, 254, 0.15);
+    --bg-main: #000000;
+    --bg-card: rgba(13, 13, 13, 0.85);
+    --border-card: rgba(255, 255, 255, 0.1);
+    --accent-glow: rgba(255, 255, 255, 0.05);
+  }
+
+  .dark {
+    --bg-main: #000000;
+    --bg-card: rgba(13, 13, 13, 0.85);
+    --border-card: rgba(255, 255, 255, 0.1);
+    --accent-glow: rgba(255, 255, 255, 0.05);
   }
 
   .marine {
@@ -19,20 +26,20 @@
 
   .light {
     --bg-main: #f8fafc;
-    --bg-card: rgba(255, 255, 255, 0.9);
+    --bg-card: rgba(255, 255, 255, 0.95);
     --border-card: rgba(203, 213, 225, 0.8);
     --accent-glow: rgba(14, 142, 233, 0.1);
   }
 
   body {
     background-color: var(--bg-main);
-    color: #f1f5f9;
+    color: #f4f4f5;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
   }
 
   .light body {
-    color: #0f172a;
+    color: #09090b;
   }
 }
 
@@ -43,19 +50,19 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(15, 23, 42, 0.6);
+  background: #000000;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(56, 170, 246, 0.35);
+  background: #27272a;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(56, 170, 246, 0.7);
+  background: #3f3f46;
 }
 
-/* Glassmorphism Classes */
+/* Glassmorphism & Obsidian Classes */
 .glass-panel {
   background: var(--bg-card);
   backdrop-filter: blur(16px);
@@ -68,12 +75,16 @@
 }
 
 .glass-panel-hover:hover {
-  border-color: rgba(56, 170, 246, 0.45);
-  box-shadow: 0 10px 30px -10px rgba(0, 242, 254, 0.2);
+  border-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
   transform: translateY(-2px);
 }
 
 /* Glow effects */
+.glow-text-white {
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
 .glow-text-cyan {
   text-shadow: 0 0 20px rgba(0, 242, 254, 0.5);
 }
@@ -86,7 +97,7 @@
   content: '';
   position: absolute;
   inset: -1px;
-  background: linear-gradient(90deg, #00f2fe, #4facfe, #00f2fe);
+  background: linear-gradient(90deg, #27272a, #52525b, #27272a);
   border-radius: inherit;
   z-index: -1;
   opacity: 0;
@@ -101,10 +112,10 @@
 .bg-tech-grid {
   background-size: 40px 40px;
   background-image: 
-    linear-gradient(to right, rgba(56, 170, 246, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(56, 170, 246, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
 .bg-radial-gradient {
-  background: radial-gradient(circle at 50% 20%, rgba(14, 142, 233, 0.15) 0%, transparent 60%);
+  background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 70%);
 }

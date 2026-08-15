@@ -19,20 +19,20 @@ export const SpacingCalculator: React.FC = () => {
   const isOverallSafe = isVertOk && isHorizOk;
 
   return (
-    <div className="rounded-3xl border border-slate-800 bg-slate-900/70 backdrop-blur-xl p-6 sm:p-8 shadow-2xl space-y-8">
+    <div className="rounded-3xl border border-neutral-800 bg-neutral-950 p-6 sm:p-8 shadow-2xl space-y-8 text-neutral-200">
       
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-neutral-800">
         <div>
           <div className="flex items-center space-x-2">
-            <div className="p-2 rounded-xl bg-cyan-500/20 text-cyan-400">
+            <div className="p-2 rounded-xl bg-neutral-800 text-white">
               <Sliders className="h-5 w-5" />
             </div>
             <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
               Antenna Safe Separation Distance Calculator
             </h3>
           </div>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-neutral-400 mt-1">
             Determine safe installation clearances from marine radars, satellite dishes, and communications transmitters (Section 6.1).
           </p>
         </div>
@@ -43,7 +43,7 @@ export const SpacingCalculator: React.FC = () => {
         
         {/* Left Column: Transmitter Type Selection */}
         <div className="md:col-span-5 space-y-3">
-          <label className="text-xs font-bold uppercase tracking-wider text-slate-300 block">
+          <label className="text-xs font-bold uppercase tracking-wider text-neutral-300 block">
             Select Vessel Transmitter Type
           </label>
           <div className="space-y-2">
@@ -55,12 +55,12 @@ export const SpacingCalculator: React.FC = () => {
                   onClick={() => setSelectedRuleIdx(idx)}
                   className={`w-full text-left p-3.5 rounded-xl border transition-all flex items-center justify-between ${
                     isSelected
-                      ? 'border-cyan-500/50 bg-cyan-500/15 text-white shadow-glow-cyan'
-                      : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:bg-slate-800 hover:text-slate-200'
+                      ? 'border-white bg-neutral-900 text-white shadow-sm font-semibold'
+                      : 'border-neutral-800 bg-black text-neutral-400 hover:bg-neutral-900 hover:text-white'
                   }`}
                 >
                   <span className="text-xs font-semibold">{rule.transmitterType}</span>
-                  <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950 px-2 py-0.5 rounded border border-cyan-800 flex-shrink-0 ml-2">
+                  <span className="text-[10px] font-mono text-neutral-300 bg-neutral-800 px-2 py-0.5 rounded border border-neutral-700 flex-shrink-0 ml-2">
                     &gt; {rule.minHorizontalDistanceM}m
                   </span>
                 </button>
@@ -70,18 +70,18 @@ export const SpacingCalculator: React.FC = () => {
         </div>
 
         {/* Right Column: Distance Test Inputs & Visual Clearance */}
-        <div className="md:col-span-7 space-y-6 bg-slate-950/60 p-6 rounded-2xl border border-slate-800">
+        <div className="md:col-span-7 space-y-6 bg-black p-6 rounded-2xl border border-neutral-800">
           
           <div className="space-y-4">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-300">
               Test Planned Vessel Clearance
             </h4>
 
             {/* Horizontal Distance slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="text-slate-300">Planned Horizontal Separation:</span>
-                <span className="font-mono font-bold text-cyan-400">{userHorizM.toFixed(1)} m ({ (userHorizM * 3.28084).toFixed(1) } ft)</span>
+                <span className="text-neutral-300">Planned Horizontal Separation:</span>
+                <span className="font-mono font-bold text-white">{userHorizM.toFixed(1)} m ({ (userHorizM * 3.28084).toFixed(1) } ft)</span>
               </div>
               <input
                 type="range"
@@ -90,9 +90,9 @@ export const SpacingCalculator: React.FC = () => {
                 step={0.5}
                 value={userHorizM}
                 onChange={(e) => setUserHorizM(Number(e.target.value))}
-                className="w-full accent-cyan-400 h-2 bg-slate-900 rounded-lg cursor-pointer"
+                className="w-full accent-white h-2 bg-neutral-900 rounded-lg cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+              <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
                 <span>Min Required: {requiredHoriz} m</span>
                 <span>Status: {isHorizOk ? '✓ PASS' : '✗ TOO CLOSE'}</span>
               </div>
@@ -101,8 +101,8 @@ export const SpacingCalculator: React.FC = () => {
             {/* Vertical Distance slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="text-slate-300">Planned Vertical Height Separation:</span>
-                <span className="font-mono font-bold text-cyan-400">{userVertM.toFixed(1)} m ({ (userVertM * 3.28084).toFixed(1) } ft)</span>
+                <span className="text-neutral-300">Planned Vertical Height Separation:</span>
+                <span className="font-mono font-bold text-white">{userVertM.toFixed(1)} m ({ (userVertM * 3.28084).toFixed(1) } ft)</span>
               </div>
               <input
                 type="range"
@@ -111,9 +111,9 @@ export const SpacingCalculator: React.FC = () => {
                 step={0.2}
                 value={userVertM}
                 onChange={(e) => setUserVertM(Number(e.target.value))}
-                className="w-full accent-cyan-400 h-2 bg-slate-900 rounded-lg cursor-pointer"
+                className="w-full accent-white h-2 bg-neutral-900 rounded-lg cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-500 font-mono">
+              <div className="flex justify-between text-[10px] text-neutral-500 font-mono">
                 <span>Min Required: {currentRule.minVerticalDistanceM} m</span>
                 <span>Status: {isVertOk ? '✓ PASS' : '✗ TOO CLOSE'}</span>
               </div>
@@ -121,14 +121,14 @@ export const SpacingCalculator: React.FC = () => {
 
             {/* In beam check if applicable */}
             {currentRule.beamZoneAngleDeg && (
-              <label className="flex items-center space-x-2.5 p-3 rounded-xl border border-slate-800 bg-slate-900/80 cursor-pointer">
+              <label className="flex items-center space-x-2.5 p-3 rounded-xl border border-neutral-800 bg-neutral-900 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={isInDirectBeam}
                   onChange={(e) => setIsInDirectBeam(e.target.checked)}
-                  className="rounded text-cyan-500 focus:ring-cyan-500 h-4 w-4 bg-slate-950 border-slate-700"
+                  className="rounded text-white focus:ring-white h-4 w-4 bg-black border-neutral-700"
                 />
-                <span className="text-xs text-slate-200">
+                <span className="text-xs text-neutral-200">
                   Antenna is located within the active scanner beam elevation zone (±{currentRule.beamZoneAngleDeg}°)
                 </span>
               </label>
@@ -162,8 +162,8 @@ export const SpacingCalculator: React.FC = () => {
           </div>
 
           {/* Risk Information */}
-          <div className="text-xs text-slate-400 space-y-1 bg-slate-900/40 p-3 rounded-xl border border-slate-800">
-            <span className="font-bold text-slate-300 block">Specific RF Risk:</span>
+          <div className="text-xs text-neutral-400 space-y-1 bg-neutral-900/60 p-3 rounded-xl border border-neutral-800">
+            <span className="font-bold text-neutral-300 block">Specific RF Risk:</span>
             <p>{currentRule.riskDescription}</p>
           </div>
 

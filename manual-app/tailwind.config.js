@@ -8,6 +8,14 @@ export default {
   theme: {
     extend: {
       colors: {
+        black: '#000000',
+        obsidian: {
+          950: '#030303',
+          900: '#080808',
+          850: '#0e0e0e',
+          800: '#141414',
+          700: '#222222',
+        },
         marine: {
           50: '#f0f7ff',
           100: '#e0effe',
@@ -21,16 +29,10 @@ export default {
           900: '#0c406e',
           950: '#072849',
         },
-        navy: {
-          800: '#0d1527',
-          850: '#0a101f',
-          900: '#070b16',
-          950: '#04070e',
-        },
         tech: {
           cyan: '#00f2fe',
           teal: '#4facfe',
-          blue: '#2563eb',
+          blue: '#3b82f6',
           amber: '#f59e0b',
           emerald: '#10b981',
           rose: '#f43f5e',
@@ -42,9 +44,9 @@ export default {
         display: ['Outfit', 'Inter', 'sans-serif'],
       },
       boxShadow: {
-        'glow-cyan': '0 0 25px -5px rgba(0, 242, 254, 0.3)',
-        'glow-blue': '0 0 25px -5px rgba(14, 142, 233, 0.35)',
-        'glow-amber': '0 0 25px -5px rgba(245, 158, 11, 0.3)',
+        'glow-cyan': '0 0 25px -5px rgba(0, 242, 254, 0.25)',
+        'glow-white': '0 0 25px -5px rgba(255, 255, 255, 0.15)',
+        'glow-amber': '0 0 25px -5px rgba(245, 158, 11, 0.25)',
       }
     },
   },

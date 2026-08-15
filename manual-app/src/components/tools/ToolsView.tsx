@@ -43,18 +43,18 @@ export const ToolsView: React.FC = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 bg-black text-white">
       
       {/* Top Banner */}
       <div className="text-center max-w-3xl mx-auto space-y-3">
-        <div className="inline-flex items-center space-x-2 rounded-full border border-cyan-500/30 bg-cyan-500/10 px-3.5 py-1 text-xs font-semibold text-cyan-300">
+        <div className="inline-flex items-center space-x-2 rounded-full border border-neutral-700 bg-neutral-900 px-3.5 py-1 text-xs font-semibold text-neutral-200">
           <Wrench className="h-3.5 w-3.5" />
           <span>Interactive Engineering Suite</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-display font-bold text-white">
           Marine Antenna & RF Engineering Tools
         </h2>
-        <p className="text-xs sm:text-sm text-slate-400">
+        <p className="text-xs sm:text-sm text-neutral-400">
           Field-ready calculations, interactive checklists, safe separation models, and failure analysis algorithms directly derived from Veripos installation specifications.
         </p>
       </div>
@@ -71,16 +71,16 @@ export const ToolsView: React.FC = () => {
               onClick={() => setActiveTool(tool.id as any)}
               className={`p-4 rounded-2xl border text-left transition-all flex flex-col justify-between ${
                 isSelected
-                  ? 'border-cyan-500/50 bg-gradient-to-b from-cyan-500/20 to-slate-900 text-white shadow-glow-cyan'
-                  : 'border-slate-800 bg-slate-950/60 text-slate-400 hover:bg-slate-900 hover:text-slate-200'
+                  ? 'border-white bg-neutral-900 text-white shadow-lg'
+                  : 'border-neutral-800 bg-neutral-950 text-neutral-400 hover:bg-neutral-900 hover:text-white'
               }`}
             >
-              <div className={`p-2 rounded-xl w-fit mb-3 ${isSelected ? 'bg-cyan-500 text-slate-950' : 'bg-slate-850 text-cyan-400'}`}>
+              <div className={`p-2 rounded-xl w-fit mb-3 ${isSelected ? 'bg-white text-black' : 'bg-neutral-800 text-neutral-300'}`}>
                 <Icon className="h-4 w-4" />
               </div>
               <div>
                 <div className="text-xs font-bold text-white">{tool.name}</div>
-                <div className="text-[10px] text-slate-400 mt-0.5">{tool.description}</div>
+                <div className="text-[10px] text-neutral-400 mt-0.5">{tool.description}</div>
               </div>
             </button>
           );

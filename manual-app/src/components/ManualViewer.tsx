@@ -70,8 +70,8 @@ export const ManualViewer: React.FC = () => {
           isWarning
             ? 'border-amber-500/40 bg-amber-500/10 text-amber-200'
             : isImportant
-            ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-200'
-            : 'border-blue-500/40 bg-blue-500/10 text-blue-200'
+            ? 'border-neutral-700 bg-neutral-900 text-neutral-200'
+            : 'border-neutral-800 bg-neutral-950 text-neutral-300'
         }`}
       >
         <div className="flex items-start space-x-3">
@@ -79,9 +79,9 @@ export const ManualViewer: React.FC = () => {
             {isWarning ? (
               <ShieldAlert className="h-5 w-5 text-amber-400" />
             ) : isImportant ? (
-              <AlertTriangle className="h-5 w-5 text-cyan-400" />
+              <AlertTriangle className="h-5 w-5 text-white" />
             ) : (
-              <Info className="h-5 w-5 text-blue-400" />
+              <Info className="h-5 w-5 text-neutral-400" />
             )}
           </div>
           <div className="space-y-1">
@@ -99,15 +99,15 @@ export const ManualViewer: React.FC = () => {
     const isCopied = copiedTableId === table.id;
 
     return (
-      <div key={table.id} className="my-6 rounded-2xl border border-slate-800 bg-slate-900/60 backdrop-blur-md overflow-hidden shadow-lg">
-        <div className="flex items-center justify-between px-4 py-3 border-b border-slate-800 bg-slate-900/90">
+      <div key={table.id} className="my-6 rounded-2xl border border-neutral-800 bg-neutral-950 overflow-hidden shadow-lg">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-800 bg-neutral-900">
           <div className="flex items-center space-x-2">
-            <FileText className="h-4 w-4 text-cyan-400" />
+            <FileText className="h-4 w-4 text-neutral-300" />
             <span className="text-xs font-bold text-white font-display">{table.caption}</span>
           </div>
           <button
             onClick={() => handleCopyTable(table.id, table.headers, table.rows)}
-            className="flex items-center space-x-1 rounded-md bg-slate-800 px-2 py-1 text-[10px] font-medium text-slate-300 hover:text-white hover:bg-slate-700 transition"
+            className="flex items-center space-x-1 rounded-md bg-neutral-800 px-2 py-1 text-[10px] font-medium text-neutral-300 hover:text-white hover:bg-neutral-700 transition"
             title="Copy Table Data (TSV)"
           >
             {isCopied ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
@@ -118,19 +118,19 @@ export const ManualViewer: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-slate-800 bg-slate-950/60">
+              <tr className="border-b border-neutral-800 bg-black">
                 {table.headers.map((h, i) => (
-                  <th key={i} className="px-4 py-3 font-semibold text-slate-200">
+                  <th key={i} className="px-4 py-3 font-semibold text-neutral-200">
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-800/60">
+            <tbody className="divide-y divide-neutral-800/60">
               {table.rows.map((row, rIdx) => (
-                <tr key={rIdx} className="hover:bg-cyan-500/5 transition-colors">
+                <tr key={rIdx} className="hover:bg-neutral-900/50 transition-colors">
                   {row.map((cell, cIdx) => (
-                    <td key={cIdx} className="px-4 py-2.5 text-slate-300 font-mono text-[11px] leading-relaxed">
+                    <td key={cIdx} className="px-4 py-2.5 text-neutral-300 font-mono text-[11px] leading-relaxed">
                       {cell}
                     </td>
                   ))}
@@ -147,36 +147,36 @@ export const ManualViewer: React.FC = () => {
     return (
       <div 
         key={fig.id} 
-        className="my-6 rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-md overflow-hidden p-3 group transition-all hover:border-cyan-500/40"
+        className="my-6 rounded-2xl border border-neutral-800 bg-neutral-950 overflow-hidden p-3 group transition-all hover:border-neutral-600"
       >
         <div 
           onClick={() => setLightboxFigure(fig)}
-          className="relative bg-slate-950/90 rounded-xl overflow-hidden cursor-zoom-in flex items-center justify-center min-h-[220px]"
+          className="relative bg-black rounded-xl overflow-hidden cursor-zoom-in flex items-center justify-center min-h-[220px]"
         >
           <img 
             src={fig.src} 
             alt={fig.alt} 
             className="max-h-[380px] w-auto object-contain rounded-lg transition-transform duration-300 group-hover:scale-[1.02]"
           />
-          <div className="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md p-1.5 rounded-lg text-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity border border-slate-700">
+          <div className="absolute top-3 right-3 bg-neutral-900/90 backdrop-blur-md p-1.5 rounded-lg text-white opacity-0 group-hover:opacity-100 transition-opacity border border-neutral-700">
             <Maximize2 className="h-4 w-4" />
           </div>
         </div>
 
         <div className="mt-3 px-1 flex items-start justify-between">
           <div>
-            <span className="font-mono text-xs font-bold text-cyan-400 mr-2">
+            <span className="font-mono text-xs font-bold text-white mr-2">
               {fig.figureNumber}
             </span>
-            <span className="text-xs text-slate-300 font-medium">
+            <span className="text-xs text-neutral-300 font-medium">
               {fig.caption}
             </span>
             {fig.details && (
-              <p className="text-[11px] text-slate-500 mt-1">{fig.details}</p>
+              <p className="text-[11px] text-neutral-500 mt-1">{fig.details}</p>
             )}
           </div>
           {fig.pageRef && (
-            <span className="text-[10px] font-mono text-slate-500 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 flex-shrink-0 ml-2">
+            <span className="text-[10px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800 flex-shrink-0 ml-2">
               PDF p.{fig.pageRef}
             </span>
           )}
@@ -188,12 +188,12 @@ export const ManualViewer: React.FC = () => {
   const renderSteps = (steps: { stepNumber: number; title: string; instruction: string; figureSrc?: string; figureCaption?: string; notes?: string[] }[]) => {
     return (
       <div className="my-8 space-y-6">
-        <div className="flex items-center justify-between pb-2 border-b border-slate-800">
-          <h4 className="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center space-x-1.5">
+        <div className="flex items-center justify-between pb-2 border-b border-neutral-800">
+          <h4 className="text-xs font-bold uppercase tracking-wider text-neutral-300 flex items-center space-x-1.5">
             <CheckCircle2 className="h-4 w-4 text-emerald-400" />
             <span>Interactive Procedure Checklist</span>
           </h4>
-          <span className="text-[11px] text-slate-400 font-mono">
+          <span className="text-[11px] text-neutral-400 font-mono">
             {steps.length} Sequential Steps
           </span>
         </div>
@@ -208,8 +208,8 @@ export const ManualViewer: React.FC = () => {
                 key={step.stepNumber}
                 className={`rounded-2xl border transition-all p-4.5 ${
                   isCompleted
-                    ? 'border-emerald-500/40 bg-emerald-950/15'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+                    ? 'border-emerald-500/40 bg-emerald-950/20'
+                    : 'border-neutral-800 bg-neutral-950 hover:border-neutral-700'
                 }`}
               >
                 <div className="flex items-start justify-between">
@@ -218,8 +218,8 @@ export const ManualViewer: React.FC = () => {
                       onClick={() => toggleChecklistStep(stepKey)}
                       className={`mt-0.5 flex h-6 w-6 items-center justify-center rounded-lg border transition-all ${
                         isCompleted
-                          ? 'border-emerald-400 bg-emerald-500 text-slate-950 font-bold'
-                          : 'border-slate-700 bg-slate-800 text-slate-400 hover:border-cyan-400'
+                          ? 'border-emerald-400 bg-emerald-500 text-black font-bold'
+                          : 'border-neutral-700 bg-neutral-900 text-neutral-400 hover:border-white hover:text-white'
                       }`}
                       title={isCompleted ? 'Mark step as incomplete' : 'Mark step as completed'}
                     >
@@ -230,7 +230,7 @@ export const ManualViewer: React.FC = () => {
                       <h5 className={`text-sm font-bold ${isCompleted ? 'text-emerald-300 line-through opacity-80' : 'text-white'}`}>
                         Step {step.stepNumber}: {step.title}
                       </h5>
-                      <p className="text-xs text-slate-300 leading-relaxed">
+                      <p className="text-xs text-neutral-300 leading-relaxed">
                         {step.instruction}
                       </p>
                     </div>
@@ -239,21 +239,21 @@ export const ManualViewer: React.FC = () => {
 
                 {/* Step Figure if present */}
                 {step.figureSrc && (
-                  <div className="mt-4 pt-3 border-t border-slate-800/80">
+                  <div className="mt-4 pt-3 border-t border-neutral-800">
                     <div 
                       onClick={() => setLightboxFigure({
                         src: step.figureSrc!,
                         caption: step.figureCaption || `Step ${step.stepNumber}: ${step.title}`,
                         figureNumber: `Step ${step.stepNumber}`
                       })}
-                      className="cursor-zoom-in group relative rounded-xl overflow-hidden bg-slate-950 p-2 max-w-lg"
+                      className="cursor-zoom-in group relative rounded-xl overflow-hidden bg-black p-2 max-w-lg border border-neutral-800"
                     >
                       <img 
                         src={step.figureSrc} 
                         alt={step.title} 
                         className="max-h-48 w-auto object-contain rounded-lg group-hover:scale-105 transition-transform"
                       />
-                      <div className="text-[10px] text-slate-400 mt-1 font-mono text-center">
+                      <div className="text-[10px] text-neutral-400 mt-1 font-mono text-center">
                         {step.figureCaption}
                       </div>
                     </div>
@@ -268,41 +268,41 @@ export const ManualViewer: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="flex-1 min-w-0 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 bg-black text-neutral-200">
       
       {/* Sticky Top Breadcrumbs & Page Reference */}
-      <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-6 text-xs text-slate-400">
+      <div className="flex items-center justify-between pb-4 border-b border-neutral-800 mb-6 text-xs text-neutral-400">
         <div className="flex items-center space-x-2 truncate">
-          <span className="text-cyan-400 font-semibold truncate">
+          <span className="text-white font-semibold truncate">
             Chapter {currentChapter.chapterNumber}
           </span>
           <span>/</span>
-          <span className="text-slate-200 font-medium truncate">
+          <span className="text-neutral-300 font-medium truncate">
             {currentSection.sectionNumber} {currentSection.title}
           </span>
         </div>
 
         <div className="flex items-center space-x-2 flex-shrink-0">
-          <span className="font-mono text-[11px] text-cyan-300 bg-cyan-950/80 px-2 py-0.5 rounded border border-cyan-800">
+          <span className="font-mono text-[11px] text-neutral-200 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-700">
             PDF Page {currentSection.pageNumber}
           </span>
           <button
             onClick={() => toggleBookmark(currentSection.id)}
             className={`p-1.5 rounded-lg border transition ${
               isBookmarked(currentSection.id)
-                ? 'border-cyan-500 bg-cyan-500/20 text-cyan-300'
-                : 'border-slate-800 bg-slate-900 text-slate-400 hover:text-white'
+                ? 'border-white bg-white text-black'
+                : 'border-neutral-800 bg-neutral-900 text-neutral-400 hover:text-white'
             }`}
             title="Bookmark Section"
           >
-            <Bookmark className={`h-3.5 w-3.5 ${isBookmarked(currentSection.id) ? 'fill-cyan-400 text-cyan-400' : ''}`} />
+            <Bookmark className={`h-3.5 w-3.5 ${isBookmarked(currentSection.id) ? 'fill-black text-black' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Main Section Header */}
       <div className="mb-8">
-        <div className="flex items-center space-x-2 text-cyan-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
+        <div className="flex items-center space-x-2 text-neutral-400 text-xs font-mono font-bold uppercase tracking-wider mb-2">
           <span>SECTION {currentSection.sectionNumber}</span>
         </div>
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-white tracking-tight">
@@ -311,7 +311,7 @@ export const ManualViewer: React.FC = () => {
       </div>
 
       {/* Section Paragraphs */}
-      <div className="space-y-4 text-slate-300 leading-relaxed text-sm sm:text-base">
+      <div className="space-y-4 text-neutral-300 leading-relaxed text-sm sm:text-base">
         {currentSection.content.map((p, idx) => (
           <p key={idx} className="leading-relaxed">
             {p}
@@ -333,20 +333,20 @@ export const ManualViewer: React.FC = () => {
 
       {/* Subsections if any */}
       {currentSection.subsections && (
-        <div className="mt-12 space-y-12 border-t border-slate-800 pt-8">
+        <div className="mt-12 space-y-12 border-t border-neutral-800 pt-8">
           {currentSection.subsections.map((sub) => (
             <div key={sub.id} id={sub.id} className="scroll-mt-24 space-y-4">
-              <div className="flex items-center justify-between pb-2 border-b border-slate-800/60">
+              <div className="flex items-center justify-between pb-2 border-b border-neutral-800">
                 <h3 className="text-xl sm:text-2xl font-display font-bold text-white">
-                  <span className="font-mono text-cyan-400 mr-2">{sub.sectionNumber}</span>
+                  <span className="font-mono text-neutral-400 mr-2">{sub.sectionNumber}</span>
                   {sub.title}
                 </h3>
-                <span className="text-[10px] font-mono text-slate-500 bg-slate-900 px-2 py-0.5 rounded">
+                <span className="text-[10px] font-mono text-neutral-400 bg-neutral-900 px-2 py-0.5 rounded border border-neutral-800">
                   p.{sub.pageNumber}
                 </span>
               </div>
 
-              <div className="space-y-3 text-slate-300 text-sm leading-relaxed">
+              <div className="space-y-3 text-neutral-300 text-sm leading-relaxed">
                 {sub.content.map((p, pIdx) => (
                   <p key={pIdx}>{p}</p>
                 ))}
@@ -362,16 +362,16 @@ export const ManualViewer: React.FC = () => {
       )}
 
       {/* Bottom Previous & Next Navigation */}
-      <div className="mt-16 pt-6 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="mt-16 pt-6 border-t border-neutral-800 flex flex-col sm:flex-row items-center justify-between gap-4">
         {prevItem ? (
           <button
             onClick={() => navigateToSection(prevItem.chapter.id, prevItem.section.id)}
-            className="w-full sm:w-auto flex items-center space-x-3 rounded-xl border border-slate-800 bg-slate-900/80 p-3.5 text-left hover:border-cyan-500/50 hover:bg-slate-800 transition group"
+            className="w-full sm:w-auto flex items-center space-x-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 text-left hover:border-neutral-600 hover:bg-neutral-900 transition group"
           >
-            <ChevronLeft className="h-5 w-5 text-cyan-400 group-hover:-translate-x-1 transition-transform" />
+            <ChevronLeft className="h-5 w-5 text-white group-hover:-translate-x-1 transition-transform" />
             <div>
-              <div className="text-[10px] uppercase font-bold text-slate-500">Previous</div>
-              <div className="text-xs font-semibold text-slate-200 truncate max-w-[200px]">
+              <div className="text-[10px] uppercase font-bold text-neutral-500">Previous</div>
+              <div className="text-xs font-semibold text-neutral-200 truncate max-w-[200px]">
                 {prevItem.section.sectionNumber} {prevItem.section.title}
               </div>
             </div>
@@ -381,15 +381,15 @@ export const ManualViewer: React.FC = () => {
         {nextItem && (
           <button
             onClick={() => navigateToSection(nextItem.chapter.id, nextItem.section.id)}
-            className="w-full sm:w-auto flex items-center justify-end space-x-3 rounded-xl border border-slate-800 bg-slate-900/80 p-3.5 text-right hover:border-cyan-500/50 hover:bg-slate-800 transition group"
+            className="w-full sm:w-auto flex items-center justify-end space-x-3 rounded-xl border border-neutral-800 bg-neutral-950 p-3.5 text-right hover:border-neutral-600 hover:bg-neutral-900 transition group"
           >
             <div>
-              <div className="text-[10px] uppercase font-bold text-slate-500">Next</div>
-              <div className="text-xs font-semibold text-slate-200 truncate max-w-[200px]">
+              <div className="text-[10px] uppercase font-bold text-neutral-500">Next</div>
+              <div className="text-xs font-semibold text-neutral-200 truncate max-w-[200px]">
                 {nextItem.section.sectionNumber} {nextItem.section.title}
               </div>
             </div>
-            <ChevronRight className="h-5 w-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+            <ChevronRight className="h-5 w-5 text-white group-hover:translate-x-1 transition-transform" />
           </button>
         )}
       </div>
